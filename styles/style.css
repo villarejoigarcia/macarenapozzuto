@@ -126,9 +126,12 @@ header:hover #last-name {
 	padding-left: .3em;
 }
 
-#nav,
-#size {
+#nav {
 	gap: 3px;
+}
+
+#size {
+	gap: 1px;
 }
 
 #nav>*,
@@ -201,6 +204,12 @@ body::-webkit-scrollbar	{
 	left: 0;
 	padding: 8px;
 	z-index: 999;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	overflow: hidden;
+	transition: all 1.5s cubic-bezier(0.4,0,0.2,1);
+	box-sizing: content-box;
 }
 
 #blur-footer {
@@ -208,7 +217,7 @@ body::-webkit-scrollbar	{
 	position: fixed;
 	bottom: 0;
 	left: 0;
-	transition: padding .666s;
+	transition: all 1.5s cubic-bezier(0.4,0,0.2,1);
 	z-index: 99;
 	height: 10%;
 }
@@ -221,6 +230,25 @@ body::-webkit-scrollbar	{
 	backdrop-filter: blur(20px);
 	mask-image: linear-gradient(to top, black 50%, transparent 100%);
 	height: 100%;
+}
+
+/*small index*/
+
+#small-index {
+	position: fixed;
+	top: 100px;
+	left: 0;
+	margin: 8px;
+	display: flex;
+	gap: 3px;
+	/* z-index: 999; */
+	width: 100%;
+	opacity: 0;
+	transition: all 1.5s cubic-bezier(0.4,0,0.2,1);
+}
+
+#small-index>* {
+	flex: 1;
 }
 
 /*responsive*/
