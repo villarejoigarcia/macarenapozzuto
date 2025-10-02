@@ -435,7 +435,11 @@ function showInfo() {
 
 		blurFooter.style.transform = '';
 
-		list.style.opacity = '1';
+		if (smallView) {
+
+			list.style.opacity = '1';
+
+		}
 
 	});
 }
