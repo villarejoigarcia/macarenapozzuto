@@ -508,57 +508,57 @@ function showPostImages() {
 
 					postsArray.forEach((otherPost, index) => {
 						if (otherPost !== post) {
-							if (index === currentIndex - 1 || index === currentIndex + 1) {
-								otherPost.style.maxWidth = '30px';
-								otherPost.style.marginLeft = '';
-							} else {
+							// if (index === currentIndex - 1 || index === currentIndex + 1) {
+							// 	otherPost.style.maxWidth = '30px';
+							// 	otherPost.style.marginLeft = '';
+							// } else {
 								otherPost.style.maxWidth = '0';
 								otherPost.style.marginLeft = '0';
-							}
+							// }
 							otherPost.classList.add('closed');
 						}
 					});
 
 				}
 
-				if (isClosed && !isOpen) {
+				// if (isClosed && !isOpen) {
 
-					console.log('C');
+				// 	console.log('C');
 
-					// Mostrar imágenes del post clicado
-					imgs.forEach((img) => {
-						img.style.maxWidth = img.dataset.initialMaxWidth;
-					});
-					post.style.maxWidth = totalMaxWidth + 'px';
+				// 	// Mostrar imágenes del post clicado
+				// 	imgs.forEach((img) => {
+				// 		img.style.maxWidth = img.dataset.initialMaxWidth;
+				// 	});
+				// 	post.style.maxWidth = totalMaxWidth + 'px';
 
-					post.classList.remove('closed');
-					post.classList.add('open');
+				// 	post.classList.remove('closed');
+				// 	post.classList.add('open');
 
-					postContent.classList.add('active');
+				// 	postContent.classList.add('active');
 
-					// Obtenemos los posts como array
-					const postsArray = Array.from(posts);
-					const currentIndex = postsArray.indexOf(post);
+				// 	// Obtenemos los posts como array
+				// 	const postsArray = Array.from(posts);
+				// 	const currentIndex = postsArray.indexOf(post);
 
-					// Ajustamos los anchos de los demás posts
-					postsArray.forEach((otherPost, index) => {
-						const postContent = otherPost.querySelector('.content');
-						if (otherPost !== post) {
-							if (index === currentIndex - 1 || index === currentIndex + 1) {
-								// Solo el anterior y el siguiente → mantienen un poco de ancho
-								otherPost.style.maxWidth = '30px';
-								otherPost.style.marginLeft = '';
-							} else {
-								// Los demás → colapsan
-								otherPost.style.maxWidth = '0';
-								otherPost.style.marginLeft = '0';
-							}
-							otherPost.classList.remove('open');
-							otherPost.classList.add('closed');
-							postContent.classList.remove('active');
-						}
-					});
-				}
+				// 	// Ajustamos los anchos de los demás posts
+				// 	postsArray.forEach((otherPost, index) => {
+				// 		const postContent = otherPost.querySelector('.content');
+				// 		if (otherPost !== post) {
+				// 			if (index === currentIndex - 1 || index === currentIndex + 1) {
+				// 				// Solo el anterior y el siguiente → mantienen un poco de ancho
+				// 				otherPost.style.maxWidth = '30px';
+				// 				otherPost.style.marginLeft = '';
+				// 			} else {
+				// 				// Los demás → colapsan
+				// 				otherPost.style.maxWidth = '0';
+				// 				otherPost.style.marginLeft = '0';
+				// 			}
+				// 			otherPost.classList.remove('open');
+				// 			otherPost.classList.add('closed');
+				// 			postContent.classList.remove('active');
+				// 		}
+				// 	});
+				// }
 			});
 
 		});
@@ -711,13 +711,13 @@ function listInteractive(animationDuration = 1500) {
 				const postContent = otherPost.querySelector('.content');
 
 				if (otherPost !== post) {
-					if (index === currentIndex - 1 || index === currentIndex + 1) {
-						otherPost.style.maxWidth = '30px';
-						otherPost.style.marginLeft = '';
-					} else {
+					// if (index === currentIndex - 1 || index === currentIndex + 1) {
+					// 	otherPost.style.maxWidth = '30px';
+					// 	otherPost.style.marginLeft = '';
+					// } else {
 						otherPost.style.maxWidth = '0';
 						otherPost.style.marginLeft = '0';
-					}
+					// }
 					otherPost.classList.remove('open');
 					otherPost.classList.add('closed');
 					postContent.classList.remove('active');
