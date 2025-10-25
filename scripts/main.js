@@ -46,7 +46,7 @@ $(document).ready(function () {
 					+ '-button';
 
 				const $div = $('<div>').addClass(className);
-				const $span = $('<p>').text(text);
+				const $span = $('<a>').text(text);
 				$div.append($span);
 				$buttons.append($div);
 			});
@@ -330,6 +330,22 @@ function initButtonStatus() {
 
 // open post
 
+// Crear el elemento p que seguirá al cursor
+const cursorText = document.createElement('p');
+cursorText.style.position = 'fixed';
+cursorText.style.pointerEvents = 'none';
+cursorText.style.zIndex = '1000';
+cursorText.style.margin = '0';
+document.body.appendChild(cursorText);
+
+// Función para actualizar el texto y posición
+function updateCursorText(post, e) {
+    const text = post.classList.contains('open') ? 'Close' : 'Open';
+    cursorText.textContent = text;
+    cursorText.style.left = e.clientX + 'px';
+    cursorText.style.top = e.clientY + 'px';
+}
+
 function showPostImages() {
 
 	const posts = document.querySelectorAll('.post');
@@ -353,6 +369,22 @@ function showPostImages() {
 		}
 
 		if (allImgs.length === 0) return;
+
+		// Añadir eventos para el texto del cursor en el elemento .media
+		const mediaContainer = post.querySelector('.media');
+		if (mediaContainer) {
+			mediaContainer.addEventListener('mouseenter', () => {
+				cursorText.style.display = 'block';
+				mediaContainer.addEventListener('mousemove', (e) => {
+					updateCursorText(post, e); // seguimos pasando el post para comprobar su estado
+				});
+			});
+
+			mediaContainer.addEventListener('mouseleave', () => {
+				cursorText.style.display = 'none';
+				mediaContainer.removeEventListener('mousemove', updateCursorText);
+			});
+		}
 
 		let loaded = 0;
 		
@@ -435,7 +467,6 @@ function showPostImages() {
 					excerpt.classList.remove('active');
 
 					post.classList.remove('open');
-
 					post.style.maxWidth = post.dataset.initialMaxWidth;
 
 					posts.forEach(otherPost => {
@@ -458,7 +489,6 @@ function showPostImages() {
 					// container.style.overflow = 'hidden';
 
 					post.classList.add('open');
-
 					const mediaContainer = post.querySelector('.media');
 					mediaContainer.classList.add('gap');
 
@@ -786,3 +816,4 @@ function postButtons() {
 		// });
 	});
 }
+

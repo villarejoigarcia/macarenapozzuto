@@ -198,7 +198,6 @@ header:hover #last-name {
 #gallery-container {
 	width: 100vw;
 	overflow: scroll;
-	cursor: pointer;
 }
 
 #gallery {
@@ -260,6 +259,7 @@ body::-webkit-scrollbar	{
 	height: 100%;
 	transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
 	gap: 0px;
+	cursor: none;
 }
 
 .media img:not(:last-child) {
@@ -300,6 +300,7 @@ body::-webkit-scrollbar	{
 	display: flex;
 	overflow: hidden;
 	transition: all 1s cubic-bezier(0.4,0,0.2,1);
+	cursor: pointer;
 }
 
 #list>*:not(.hover) {
@@ -516,9 +517,9 @@ body::-webkit-scrollbar	{
 	margin-left: calc(100%/3);
 } */
 
-/* #info-fields>*:first-child {
+#info-fields>*:first-child {
 	flex-grow: 2;
-} */
+}
 
 #info-fields h2 {
 	margin-bottom: 1em;
@@ -547,8 +548,13 @@ body::-webkit-scrollbar	{
 	/* padding: 8px; */
 }
 
-#contact>*:nth-child(5) {
+/* #contact>*:nth-child(5) {
 	text-align: right;
+	flex-grow: 2;
+} */
+
+#contact>*:nth-child(3) {
+	/* text-align: right; */
 	flex-grow: 2;
 }
 
