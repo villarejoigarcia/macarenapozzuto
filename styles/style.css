@@ -209,7 +209,7 @@ header:hover #last-name {
 	/* gap: 3px; */
 	padding: 0 3px;
 	transition: var(--transition);
-	transform: translateY(0);
+	/* transform: translateY(0); */
 }
 
 #gallery.about {

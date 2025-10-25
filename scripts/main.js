@@ -455,7 +455,7 @@ function showPostImages() {
 
 					console.log('A');
 
-					container.style.overflow = 'hidden';
+					// container.style.overflow = 'hidden';
 
 					post.classList.add('open');
 
