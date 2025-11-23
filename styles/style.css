@@ -242,6 +242,7 @@ header:hover #last-name {
 	flex: 0 0 auto;
 	transition: all 1s cubic-bezier(0.4,0,0.2,1);
 	align-items: flex-start;
+	justify-content: center;
 	position: relative;
 	height: 100%;
 	overflow: hidden;
@@ -252,6 +253,7 @@ header:hover #last-name {
 
 	/* overflow: scroll; */
 }
+
 
 /* .post {
 	padding-left: 3px;
@@ -276,7 +278,6 @@ body::-webkit-scrollbar	{
 
 .media {
 	display: flex;
-	align-items: flex-end;
 	height: 100%;
 	transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
 	gap: 3px;
@@ -633,7 +634,7 @@ body::-webkit-scrollbar	{
 	h2,
 	p,
 	span,
-	a.buttons,
+	a,
 	::before {
 		font-size: 11px;
 	}

@@ -182,7 +182,30 @@ function viewModes() {
 
 		const openPost = Array.from(posts).find(post => post.classList.contains('open'));
 
-		posts.forEach(post => {
+		if (openPost) {
+			openPost.style.height = '100%';
+
+			// actualizar siempre dataset del post
+			const postInitial = parseFloat(openPost.dataset.initialMaxWidth);
+			if (!isNaN(postInitial)) {
+				openPost.dataset.initialMaxWidth = (postInitial * 3) + 'px';
+			}
+
+			// actualizar dataset y style.maxWidth de todas las imágenes
+			const imgs = openPost.querySelectorAll('img');
+			let totalWidth = 0;
+			imgs.forEach(img => {
+				const imgInitial = parseFloat(img.dataset.initialMaxWidth);
+				if (!isNaN(imgInitial)) {
+					const newImgWidth = imgInitial * 3;
+					img.dataset.initialMaxWidth = newImgWidth + 'px';
+					img.style.maxWidth = newImgWidth + 'px'; // 🔹 aplicar siempre
+					totalWidth += newImgWidth;
+				}
+			});
+
+		} else {
+			posts.forEach(post => {
 			post.style.height = '100%';
 
 			// actualizar siempre dataset del post
@@ -204,14 +227,18 @@ function viewModes() {
 				}
 			});
 
-			if (openPost && post === openPost) {
-				// post abierto: maxWidth = suma de sus imágenes
-				post.style.maxWidth = totalWidth + 'px';
-			} else if (!post.classList.contains('closed')) {
-				// solo actualizamos maxWidth si el post no está cerrado
-				post.style.maxWidth = post.dataset.initialMaxWidth;
-			}
+			// if (openPost && post === openPost) {
+			// 	// post abierto: maxWidth = suma de sus imágenes
+			// 	post.style.maxWidth = totalWidth + 'px';
+			// } else if (!post.classList.contains('closed')) {
+			// 	// solo actualizamos maxWidth si el post no está cerrado
+			// 	post.style.maxWidth = post.dataset.initialMaxWidth;
+			// }
+
+			post.style.maxWidth = post.dataset.initialMaxWidth;
 		});
+		}
+
 	});
 
 	// small
@@ -222,7 +249,37 @@ function viewModes() {
 
 		const openPost = Array.from(posts).find(post => post.classList.contains('open'));
 
-		posts.forEach(post => {
+		if (openPost) {
+			openPost.style.height = 'calc(100%/3)';
+
+			// actualizar dataset del post
+			const postInitial = parseFloat(openPost.dataset.initialMaxWidth);
+			if (!isNaN(postInitial)) {
+				openPost.dataset.initialMaxWidth = (postInitial / 3) + 'px';
+			}
+
+			// actualizar dataset de todas las imágenes
+			const imgs = openPost.querySelectorAll('img');
+			let totalWidth = 0;
+			imgs.forEach(img => {
+				const imgInitial = parseFloat(img.dataset.initialMaxWidth);
+				if (!isNaN(imgInitial)) {
+					const newImgWidth = imgInitial / 3;
+					img.dataset.initialMaxWidth = newImgWidth + 'px';
+					// solo aplicamos style.maxWidth a las imágenes del post abierto
+					if (openPost && openPost === openPost) img.style.maxWidth = newImgWidth + 'px';
+					totalWidth += newImgWidth;
+				}
+			});
+
+			// if (openPost && post === openPost) {
+			// 	post.style.maxWidth = totalWidth + 'px';
+			// } else if (!openPost) {
+			// 	post.style.maxWidth = post.dataset.initialMaxWidth;
+			// }
+			
+		} else {
+			posts.forEach(post => {
 			post.style.height = 'calc(100%/3)';
 
 			// actualizar dataset del post
@@ -245,12 +302,15 @@ function viewModes() {
 				}
 			});
 
-			if (openPost && post === openPost) {
-				post.style.maxWidth = totalWidth + 'px';
-			} else if (!openPost) {
-				post.style.maxWidth = post.dataset.initialMaxWidth;
-			}
+			// if (openPost && post === openPost) {
+			// 	post.style.maxWidth = totalWidth + 'px';
+			// } else if (!openPost) {
+			// 	post.style.maxWidth = post.dataset.initialMaxWidth;
+			// }
+			post.style.maxWidth = post.dataset.initialMaxWidth;
 		});
+		}
+		
 	});
 
 }
