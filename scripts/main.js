@@ -175,23 +175,93 @@ function viewModes() {
 	});
 
 	// large
-	large?.addEventListener('click', function () {
+	// large?.addEventListener('click', function () {
+	// 	if (info || largeView) return;
+	// 	smallView = false;
+	// 	largeView = true;
+
+	// 	large.classList.add('active');
+	// 	small.classList.remove('active');
+
+	// 	const openPost = Array.from(posts).find(post => post.classList.contains('open'));
+
+	// 	if (openPost) {
+	// 		openPost.style.height = '100%';
+
+	// 		// actualizar siempre dataset del post
+	// 		const postInitial = parseFloat(openPost.dataset.initialMaxWidth);
+	// 		if (!isNaN(postInitial)) {
+	// 			openPost.dataset.initialMaxWidth = (postInitial * 3) + 'px';
+	// 		}
+
+	// 		// actualizar dataset y style.maxWidth de todas las imágenes
+	// 		const imgs = openPost.querySelectorAll('img');
+	// 		let totalWidth = 0;
+	// 		imgs.forEach(img => {
+	// 			const imgInitial = parseFloat(img.dataset.initialMaxWidth);
+	// 			if (!isNaN(imgInitial)) {
+	// 				const newImgWidth = imgInitial * 3;
+	// 				img.dataset.initialMaxWidth = newImgWidth + 'px';
+	// 				img.style.maxWidth = newImgWidth + 'px'; // 🔹 aplicar siempre
+	// 				totalWidth += newImgWidth;
+	// 			}
+	// 		});
+
+	// 	} else {
+	// 		posts.forEach(post => {
+	// 		post.style.height = '100%';
+
+	// 		// actualizar siempre dataset del post
+	// 		const postInitial = parseFloat(post.dataset.initialMaxWidth);
+	// 		if (!isNaN(postInitial)) {
+	// 			post.dataset.initialMaxWidth = (postInitial * 3) + 'px';
+	// 		}
+
+	// 		// actualizar dataset y style.maxWidth de todas las imágenes
+	// 		const imgs = post.querySelectorAll('img');
+	// 		let totalWidth = 0;
+	// 		imgs.forEach(img => {
+	// 			const imgInitial = parseFloat(img.dataset.initialMaxWidth);
+	// 			if (!isNaN(imgInitial)) {
+	// 				const newImgWidth = imgInitial * 3;
+	// 				img.dataset.initialMaxWidth = newImgWidth + 'px';
+	// 				img.style.maxWidth = newImgWidth + 'px'; // 🔹 aplicar siempre
+	// 				totalWidth += newImgWidth;
+	// 			}
+	// 		});
+
+	// 		// if (openPost && post === openPost) {
+	// 		// 	// post abierto: maxWidth = suma de sus imágenes
+	// 		// 	post.style.maxWidth = totalWidth + 'px';
+	// 		// } else if (!post.classList.contains('closed')) {
+	// 		// 	// solo actualizamos maxWidth si el post no está cerrado
+	// 		// 	post.style.maxWidth = post.dataset.initialMaxWidth;
+	// 		// }
+
+	// 		post.style.maxWidth = post.dataset.initialMaxWidth;
+	// 	});
+	// 	}
+
+	// });
+
+	function applyLargeView() {
 		if (info || largeView) return;
 		smallView = false;
 		largeView = true;
+
+		large.classList.add('active');
+		small.classList.remove('active');
 
 		const openPost = Array.from(posts).find(post => post.classList.contains('open'));
 
 		if (openPost) {
 			openPost.style.height = '100%';
 
-			// actualizar siempre dataset del post
 			const postInitial = parseFloat(openPost.dataset.initialMaxWidth);
 			if (!isNaN(postInitial)) {
 				openPost.dataset.initialMaxWidth = (postInitial * 3) + 'px';
 			}
 
-			// actualizar dataset y style.maxWidth de todas las imágenes
 			const imgs = openPost.querySelectorAll('img');
 			let totalWidth = 0;
 			imgs.forEach(img => {
@@ -199,53 +269,55 @@ function viewModes() {
 				if (!isNaN(imgInitial)) {
 					const newImgWidth = imgInitial * 3;
 					img.dataset.initialMaxWidth = newImgWidth + 'px';
-					img.style.maxWidth = newImgWidth + 'px'; // 🔹 aplicar siempre
+					img.style.maxWidth = newImgWidth + 'px';
 					totalWidth += newImgWidth;
 				}
 			});
 
 		} else {
 			posts.forEach(post => {
-			post.style.height = '100%';
+				post.style.height = '100%';
 
-			// actualizar siempre dataset del post
-			const postInitial = parseFloat(post.dataset.initialMaxWidth);
-			if (!isNaN(postInitial)) {
-				post.dataset.initialMaxWidth = (postInitial * 3) + 'px';
-			}
-
-			// actualizar dataset y style.maxWidth de todas las imágenes
-			const imgs = post.querySelectorAll('img');
-			let totalWidth = 0;
-			imgs.forEach(img => {
-				const imgInitial = parseFloat(img.dataset.initialMaxWidth);
-				if (!isNaN(imgInitial)) {
-					const newImgWidth = imgInitial * 3;
-					img.dataset.initialMaxWidth = newImgWidth + 'px';
-					img.style.maxWidth = newImgWidth + 'px'; // 🔹 aplicar siempre
-					totalWidth += newImgWidth;
+				const postInitial = parseFloat(post.dataset.initialMaxWidth);
+				if (!isNaN(postInitial)) {
+					post.dataset.initialMaxWidth = (postInitial * 3) + 'px';
 				}
+
+				const imgs = post.querySelectorAll('img');
+				imgs.forEach(img => {
+					const imgInitial = parseFloat(img.dataset.initialMaxWidth);
+					if (!isNaN(imgInitial)) {
+						const newImgWidth = imgInitial * 3;
+						img.dataset.initialMaxWidth = newImgWidth + 'px';
+						img.style.maxWidth = newImgWidth + 'px';
+					}
+				});
+
+				post.style.maxWidth = post.dataset.initialMaxWidth;
 			});
-
-			// if (openPost && post === openPost) {
-			// 	// post abierto: maxWidth = suma de sus imágenes
-			// 	post.style.maxWidth = totalWidth + 'px';
-			// } else if (!post.classList.contains('closed')) {
-			// 	// solo actualizamos maxWidth si el post no está cerrado
-			// 	post.style.maxWidth = post.dataset.initialMaxWidth;
-			// }
-
-			post.style.maxWidth = post.dataset.initialMaxWidth;
-		});
 		}
+	}
 
+	large?.addEventListener('click', applyLargeView);
+
+	posts.forEach(post => {
+		post.addEventListener('click', () => {
+			if (smallView) {
+				applyLargeView();
+			}
+		});
 	});
 
 	// small
 	small?.addEventListener('click', function () {
+
 		if (info || smallView) return;
 		smallView = true;
 		largeView = false;
+
+		large.classList.remove('active');
+		large.style = "";
+		small.classList.add('active');
 
 		const openPost = Array.from(posts).find(post => post.classList.contains('open'));
 
@@ -406,12 +478,13 @@ function initBlurFooterHover() {
 // nav styles
 
 function initButtonStatus() {
-	const buttons = $('#size>*');
-	buttons.on('click', function () {
-		if (info) return;
-		buttons.css('opacity', 'calc(1/3)');
-		$(this).css('opacity', '1');
-	});
+	const buttons = $('#size>*:first-child');
+	buttons.css('opacity', '1');
+	// buttons.on('load', function () {
+	// 	if (info) return;
+	// 	buttons.css('opacity', 'calc(1/3)');
+	// 	$(this).css('opacity', '1');
+	// });
 }
 
 // cursor status
@@ -425,7 +498,10 @@ document.body.appendChild(cursorText);
 
 function updateCursorText(post, e) {
 	if (window.innerWidth > 1024) {
-		const text = post.classList.contains('open') ? 'Close' : 'Open';
+		const text =
+			smallView ? 'Large' :
+				post.classList.contains('open') ? 'Close' :
+					'Open';
 		cursorText.textContent = text;
 		cursorText.style.left = e.clientX + 'px';
 		cursorText.style.top = e.clientY + 'px';
@@ -494,6 +570,10 @@ function showPostImages() {
 			}
 
 			img.addEventListener('click', function (e) {
+
+				if (smallView) {
+					return;
+				}
 
 				const images = post.querySelectorAll('img');
 				let totalMaxWidth = 0;

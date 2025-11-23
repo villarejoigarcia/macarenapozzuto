@@ -177,7 +177,7 @@ header:hover #last-name {
 }
 
 #nav>*:not(:first-child),
-#size>*:not(:first-child) {
+#size>* {
 	opacity: calc(1/3);
 }
 
@@ -208,6 +208,10 @@ header:hover #last-name {
 
 #size.hide {
 	max-height: 0;
+}
+
+#size>*.active {
+	opacity: 1;
 }
 
 /*gallery*/
@@ -252,6 +256,10 @@ header:hover #last-name {
 	/*251121 0924*/
 
 	/* overflow: scroll; */
+}
+
+.post img {
+	transform-origin: center center;
 }
 
 
