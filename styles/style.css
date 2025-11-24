@@ -639,7 +639,7 @@ body::-webkit-scrollbar	{
 @media (max-width: 1024px) {
 	
 	:root {
-		--line_height: calc(11px*1.1);
+		--line_height: calc(13px*1.1);
 	}
 
 	h1,
@@ -648,7 +648,7 @@ body::-webkit-scrollbar	{
 	span,
 	a,
 	::before {
-		font-size: 11px;
+		font-size: 13px;
 	}
 
 	img,
