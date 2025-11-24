@@ -56,6 +56,10 @@ a {
 	cursor: pointer;
 }
 
+a {
+	display: block;
+}
+
 h1,
 h2,
 p,
@@ -702,7 +706,7 @@ body::-webkit-scrollbar	{
 	}
 
 	.excerpt {
-		margin-bottom: var(--line_height);
+		margin-bottom: calc(var(--line_height) * 2);
 	}
 
 	#contact>* {
