@@ -494,6 +494,7 @@ cursorText.style.position = 'fixed';
 cursorText.style.pointerEvents = 'none';
 cursorText.style.zIndex = '1000';
 cursorText.style.margin = '0';
+cursorText.id = 'cursor';
 document.body.appendChild(cursorText);
 
 function updateCursorText(post, e) {
@@ -667,9 +668,11 @@ function showPostImages() {
 					targetScroll = post.offsetLeft - container.offsetLeft;
 				}
 
+				const delay = imgs.length > 0 ? 250 : 0;
+
 				setTimeout(() => {
 					smoothScrollTo(container, targetScroll, 1000);
-				}, 250);
+				}, delay);
 
 				const isOpen = post.classList.contains('open');
 
@@ -732,7 +735,7 @@ function showPostImages() {
 
 					console.log('close');
 
-					container.style.overflow = "scroll";
+					// container.style.overflow = "scroll";
 
 					if (isMobile) {
 
@@ -767,18 +770,17 @@ function showPostImages() {
 
 				} else if (!isOpen && !isClosed) {
 
-					openPost = true;
-
 					console.log('open');
 
-					container.style.overflow = "hidden";
+					// post.dataset.previousScroll = container.scrollLeft;
 
-					post.dataset.previousScroll = container.scrollLeft;
+					if (imgs.length === 0) return;
+
+					openPost = true;
 
 					post.classList.add('open');
 					initPostScroll(post);
-
-					if (imgs.length === 0) return;
+					// container.style.overflow = "hidden";
 
 						const postContent = post.querySelector('.content');
 						postContent.classList.add('active');
@@ -851,6 +853,7 @@ function listInteractive(animationDuration = 1500) {
 				console.log('list');
 
 				const imgs = post.querySelectorAll('img');
+				const otherImgs = Array.from(imgs).slice(1);
 				const postContent = post.querySelector('.content');
 
 				postContent.classList.add('active');
@@ -878,9 +881,16 @@ function listInteractive(animationDuration = 1500) {
 
 				// post.style.paddingLeft = '';
 
-				post.classList.remove('closed');
-				post.classList.add('open');
-				initPostScroll(post);
+				if (otherImgs.length > 0) {
+
+					post.classList.remove('closed');
+					post.classList.add('open');
+					initPostScroll(post);
+
+				} else {
+					openPost = false;
+					// container.style = "";
+				}
 
 				// const postsArray = Array.from(posts);
 
@@ -942,12 +952,16 @@ function listInteractive(animationDuration = 1500) {
 
 						smoothScrollTo(container, targetScroll, 1000);
 					} else {
-						post.style.maxWidth = '100vw'; // ancho máximo en desktop
+
 						const postCenter = post.offsetLeft;
 						const containerCenter = container.offsetLeft;
 						const targetScroll = postCenter - containerCenter;
-
 						smoothScrollTo(container, targetScroll, 1000);
+
+						if (otherImgs.length === 0) return;
+
+						post.style.maxWidth = '100vw'; // ancho máximo en desktop
+		
 					}
 				}, 800+200);
 
