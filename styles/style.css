@@ -655,7 +655,7 @@ body::-webkit-scrollbar	{
 
 @media (max-width: 1024px) {
 	
-	:root {
+	/* :root {
 		--line_height: calc(13px*1.1);
 	}
 
@@ -666,7 +666,7 @@ body::-webkit-scrollbar	{
 	a,
 	::before {
 		font-size: 13px;
-	}
+	} */
 
 	img,
 	video {
