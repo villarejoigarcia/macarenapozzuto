@@ -12,7 +12,9 @@ $(document).ready(function () {
 
 	c.projects.forEach((project, index) => {
 
-		const slide = $('<div>').addClass('post');
+		const slide = $('<div>')
+		.addClass('post')
+		.attr('data-index', index + 1);
 
 		// media
 
@@ -64,9 +66,25 @@ $(document).ready(function () {
 
 	});
 
+	const $list = $('#list');
+	$list.empty();
+
+	c.projects.forEach((project, index) => {
+
+		if (project.fields) {
+			const $fields = $('<div>').attr('data-index', index + 1);
+
+			$fields.append($('<p>').text(project.fields.title));
+
+			$list.append($fields);
+		}
+
+	});
+
 	// functions
 
 	logoAnimation();
+	list();
 
 });
 
@@ -216,15 +234,30 @@ $(document).on('click', '.post', function () {
 	}
 
 	function closePost() {
+
 		$('body').removeClass('fixed');
 
 		post.removeClass('open active');
 
 		$('.post').removeClass('hide');
+
 	}
 
 	if (isOpen) {
-		closePost();
+		if (postScroll) {
+
+			movePost();
+
+			setTimeout(() => {
+				closePost();
+			}, 1000);
+
+		} else {
+
+			closePost();
+			movePost();
+
+		}
 		return;
 	}
 
@@ -244,6 +277,32 @@ $(document).on('click', '.post', function () {
 	}
 
 });
+
+// list
+
+function list() {
+	const posts = $('.post');
+	const listItems = $('#list>*');
+
+	posts.on('click', function () {
+
+		const index = $(this).data('index');
+
+		listItems.removeClass('active');
+		listItems.filter(`[data-index="${index}"]`).addClass('active');
+	});
+
+	listItems.on('click', function () {
+
+		const index = $(this).data('index');
+
+		posts.filter(`[data-index="${index}"]`).addClass('active');
+		posts.filter(`[data-index="${index}"]`).removeClass('hide');
+		posts.not(`[data-index="${index}"]`).removeClass('active');
+		posts.not(`[data-index="${index}"]`).addClass('hide');
+	});
+
+}
 
 // si .post está .open cambiar los mouseenter de los otros .post por click (prev/next)
 

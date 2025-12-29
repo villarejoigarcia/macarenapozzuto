@@ -288,6 +288,27 @@ header:hover #last-name {
 	padding: 0 var(--kv);
 }
 
+/*list*/
+
+#list {
+	position: fixed;
+	left: 40vw;
+	top: var(--kv);
+	/* display: flex; */
+	display: none;
+	flex-direction: column;
+	justify-content: start;
+	gap: calc(var(--kv));
+}
+
+#list>* {
+	transition: all .666s;
+}
+
+#list>*:not(.active) {
+	opacity: .333;
+}
+
 /*buttons*/
 
 .buttons>*:not(:last-child) *:after,
