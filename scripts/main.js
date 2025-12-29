@@ -119,6 +119,7 @@ function logoAnimation() {
 		div.dataset.realWidth = width;
 		div.style.maxWidth = '0';
 	});
+	
 	if (zz) {
 		const width = getH1Width(zz);
 		zz.dataset.realWidth = width;
