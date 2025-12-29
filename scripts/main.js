@@ -314,14 +314,13 @@ function handlePost(post) {
 
 			post.addClass('active');
 
-			const windowHeight = $(window).height();
-			const postOffsetTop = post.offset().top;
-			const postHeight = post.outerHeight();
+			const offsetTop = post.offset().top;
+			const topMargin = window.innerHeight * 0.125; // 12.5vh
 
-			const scrollTo =
-				postOffsetTop + postHeight / 2 - windowHeight / 2;
+			const scrollTo = offsetTop - topMargin;
 
 			$('html, body').animate({ scrollTop: scrollTo }, 1000);
+
 		});
 	}
 
