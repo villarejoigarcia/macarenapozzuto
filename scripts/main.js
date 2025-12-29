@@ -146,35 +146,46 @@ document.addEventListener('DOMContentLoaded', logoAnimation);
 // feed
 
 // hover
-$(document).on('mouseleave', '.post', function () {
+$(document).on('mouseleave', '.cover', function () {
+
+	const post = $(this).closest('.post');
 
 	if ($('.post').hasClass('open')) return;
 
-	if ($(this).scrollLeft() !== 0) {
+	if (post.scrollLeft() !== 0) {
 
-		$(this).find('.media').css('transition-delay', '1.333s');
+		post.find('.media').css('transition-delay', '1.333s');
 
 		setTimeout(() => {
-			$(this).animate({ scrollLeft: 0 }, 1000);
-		}, 666);
-	}
 
+			post.animate({ scrollLeft: 0 }, 1000);
+			post
+				.removeClass('active');
+
+		}, 666);
+	} else {
+
+		$('.post')
+			.removeClass('hide active');
+
+	}
 });
 
-$(document).on('mouseenter', '.post', function () {
+$(document).on('mouseenter', '.cover', function () {
+
+	const post = $(this).closest('.post');
 
 	if ($('.post').hasClass('open')) return;
 
-	$(this).find('.media').css('transition-delay', '');
+	post.find('.media').css('transition-delay', '');
 
-	$('.post').not(this)
+	$('.post').not(post)
 		.addClass('hide')
 		.removeClass('active open');
 
-	$(this)
+	post
 		.removeClass('hide')
 		.addClass('active');
-
 });
 
 
