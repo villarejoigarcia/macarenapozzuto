@@ -74,7 +74,7 @@ $(document).ready(function () {
 		if (project.fields) {
 			const $fields = $('<div>').attr('data-index', index + 1);
 
-			$fields.append($('<p>').text(project.fields.title));
+			$fields.append($('<a>').text(project.fields.title));
 
 			$list.append($fields);
 		}
@@ -84,8 +84,6 @@ $(document).ready(function () {
 	// functions
 
 	logoAnimation();
-	list();
-
 });
 
 // logo animation
@@ -195,21 +193,101 @@ document.addEventListener('scroll', function (e) {
 
 
 // open
-$(document).on('click', '.post', function () {
+// $(document).on('click', '.post', function () {
 
-	// console.log(postScroll);
+// 	// console.log(postScroll);
 
-	const post = $(this);
+// 	const post = $(this);
+
+// 	const isOpen = post.hasClass('open');
+
+// 	$('body').addClass('fixed');
+
+// 	function movePost() {
+// 		$('.post').animate({ scrollLeft: 0 }, 1000);
+// 	}
+
+// 	function openPost() {
+// 		post
+// 			.addClass('open')
+// 			.removeClass('hide');
+
+// 		$('.post').not(post)
+// 			.addClass('hide')
+// 			.removeClass('open active');
+
+// 		post.one('transitionend', () => {
+
+// 			post.addClass('active');
+
+// 			const windowHeight = $(window).height();
+// 			const postOffsetTop = post.offset().top;
+// 			const postHeight = post.outerHeight();
+
+// 			const scrollTo =
+// 				postOffsetTop + postHeight / 2 - windowHeight / 2;
+
+// 			$('html, body').animate({ scrollTop: scrollTo }, 1000);
+// 		});
+// 	}
+
+// 	function closePost() {
+
+// 		$('body').removeClass('fixed');
+
+// 		post.removeClass('open active');
+
+// 		$('.post').removeClass('hide');
+
+// 	}
+
+// 	if (isOpen) {
+// 		if (postScroll) {
+
+// 			movePost();
+
+// 			setTimeout(() => {
+// 				closePost();
+// 			}, 1000);
+
+// 		} else {
+
+// 			closePost();
+// 			movePost();
+
+// 		}
+// 		return;
+// 	}
+
+// 	if (postScroll) {
+
+// 		movePost();
+
+// 		setTimeout(() => {
+// 			openPost();
+// 		}, 1000);
+
+// 	} else {
+
+// 		openPost();
+// 		movePost();
+
+// 	}
+
+// });
+
+function handlePost(post) {
 
 	const isOpen = post.hasClass('open');
-
-	$('body').addClass('fixed');
+	const postIndex = $('.post').index(post); 
 
 	function movePost() {
 		$('.post').animate({ scrollLeft: 0 }, 1000);
 	}
 
 	function openPost() {
+		$('body').addClass('fixed');
+
 		post
 			.addClass('open')
 			.removeClass('hide');
@@ -217,6 +295,9 @@ $(document).on('click', '.post', function () {
 		$('.post').not(post)
 			.addClass('hide')
 			.removeClass('open active');
+
+		$('#list [data-index]').removeClass('active');
+		$('#list [data-index="' + (postIndex + 1) + '"]').addClass('active');
 
 		post.one('transitionend', () => {
 
@@ -234,75 +315,72 @@ $(document).on('click', '.post', function () {
 	}
 
 	function closePost() {
-
 		$('body').removeClass('fixed');
 
 		post.removeClass('open active');
 
 		$('.post').removeClass('hide');
 
+		$('#list [data-index]').removeClass('active');
 	}
 
 	if (isOpen) {
 		if (postScroll) {
-
 			movePost();
-
-			setTimeout(() => {
-				closePost();
-			}, 1000);
-
+			setTimeout(closePost, 1000);
 		} else {
-
-			closePost();
 			movePost();
-
+			closePost();
 		}
 		return;
 	}
 
 	if (postScroll) {
-
 		movePost();
-
-		setTimeout(() => {
-			openPost();
-		}, 1000);
-
+		setTimeout(openPost, 1000);
 	} else {
-
-		openPost();
 		movePost();
-
+		openPost();
 	}
+}
+
+$(document).on('click', '.post', function () {
+
+	handlePost($(this));
+
+});
+
+$(document).on('click', '#list [data-index]', function () {
+
+	const index = $(this).data('index') - 1;
+	const post = $('.post').eq(index);
+
+	if (!post.length) return;
+
+	handlePost(post);
+
+});
+
+$(document).on('mouseenter', '#list', function () {
+
+	const indexItems = $(this).children();
+
+	indexItems.addClass('hover');
+
+	$('header').addClass('active');
+});
+
+$(document).on('mouseleave', '#list', function () {
+
+	const indexItems = $(this).children();
+
+	indexItems.removeClass('hover');
+
+	$('header').removeClass('active');
 
 });
 
 // list
-
-function list() {
-	const posts = $('.post');
-	const listItems = $('#list>*');
-
-	posts.on('click', function () {
-
-		const index = $(this).data('index');
-
-		listItems.removeClass('active');
-		listItems.filter(`[data-index="${index}"]`).addClass('active');
-	});
-
-	listItems.on('click', function () {
-
-		const index = $(this).data('index');
-
-		posts.filter(`[data-index="${index}"]`).addClass('active');
-		posts.filter(`[data-index="${index}"]`).removeClass('hide');
-		posts.not(`[data-index="${index}"]`).removeClass('active');
-		posts.not(`[data-index="${index}"]`).addClass('hide');
-	});
-
-}
 
 // si .post está .open cambiar los mouseenter de los otros .post por click (prev/next)
 
