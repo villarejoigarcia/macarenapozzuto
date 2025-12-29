@@ -291,6 +291,7 @@ document.addEventListener('scroll', function (e) {
 function handlePost(post) {
 
 	const isOpen = post.hasClass('open');
+	const wasOpen = $('.post').hasClass('open');
 	const postIndex = $('.post').index(post); 
 
 	function movePost() {
@@ -311,7 +312,9 @@ function handlePost(post) {
 		$('#list [data-index]').removeClass('active');
 		$('#list [data-index="' + (postIndex + 1) + '"]').addClass('active');
 
-		post.one('transitionend', () => {
+		// post.one('transitionend', () => {
+
+		function moveFeed() {
 
 			post.addClass('active');
 
@@ -320,9 +323,22 @@ function handlePost(post) {
 
 			const scrollTo = offsetTop - topMargin;
 
-			$('html, body').animate({ scrollTop: scrollTo }, 1000);
+			$('html, body').animate({ scrollTop: scrollTo }, 666 * 2);
+		}
 
-		});
+		if (wasOpen) {
+			post.one('transitionend', () => {
+				moveFeed();
+			});
+			console.log('a');
+		} else {
+			// post.one('transitionend', () => {
+				moveFeed();
+				console.log('b');
+			// });
+		}
+
+		// });
 	}
 
 	function closePost() {
@@ -340,7 +356,7 @@ function handlePost(post) {
 			movePost();
 			setTimeout(closePost, 1000);
 		} else {
-			movePost();
+			// movePost();
 			closePost();
 		}
 		return;
@@ -350,7 +366,7 @@ function handlePost(post) {
 		movePost();
 		setTimeout(openPost, 1000);
 	} else {
-		movePost();
+		// movePost();
 		openPost();
 	}
 }
