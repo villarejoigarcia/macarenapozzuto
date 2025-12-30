@@ -92,6 +92,7 @@ function logoAnimation() {
 
 	const header = document.querySelector('header');
 	const logo = document.getElementById('logo');
+	const logoWrap = document.getElementById('logo-wrap');
 	const zz = document.getElementById('zz');
 
 	if (!logo) return;
@@ -126,13 +127,13 @@ function logoAnimation() {
 		zz.style.maxWidth = width + 'px';
 	}
 
-	header?.addEventListener('mouseenter', () => {
+	logoWrap?.addEventListener('mouseenter', () => {
 		logoDivs.forEach(div => {
 			div.style.maxWidth = div.dataset.realWidth + 'px';
 		});
 		if (zz) zz.style.maxWidth = '0';
 	});
-	header?.addEventListener('mouseleave', () => {
+	logoWrap?.addEventListener('mouseleave', () => {
 		logoDivs.forEach(div => {
 			div.style.maxWidth = '0';
 		});
@@ -288,6 +289,10 @@ document.addEventListener('scroll', function (e) {
 
 // });
 
+// const CLOSED_VH = 33.333;
+// const OPEN_VH = 75;
+// const HEIGHT_RATIO = OPEN_VH / CLOSED_VH; // 2.25
+
 function handlePost(post) {
 
 	const isOpen = post.hasClass('open');
@@ -311,6 +316,19 @@ function handlePost(post) {
 
 		$('#list [data-index]').removeClass('active');
 		$('#list [data-index="' + (postIndex + 1) + '"]').addClass('active');
+
+		$('.single-ui').addClass('active');
+		// $('#list [data-index="' + (postIndex + 1) + '"]').addClass('active');
+
+		// function afterLayout() {
+		// 	adjustScrollLeft(post);
+		// 	moveFeed();
+		// }
+		// adjustScrollLeft(post);
+
+		// post.one('transitionend', () => {
+			// moveFeed();
+		// });
 
 		// post.one('transitionend', () => {
 
@@ -349,26 +367,38 @@ function handlePost(post) {
 		$('.post').removeClass('hide');
 
 		$('#list [data-index]').removeClass('active');
+
+		$('.single-ui').removeClass('active open');
+		
 	}
 
-	if (isOpen) {
+	if (postScroll) {
+		if (isOpen) return;
+		movePost();
+		if (wasOpen) {
+			setTimeout(openPost, 1000);
+		} else {
+			openPost();
+		}
+	} else {
+		if (isOpen) return;
+		openPost();
+	}
+
+	// close
+
+	$(document).on('click', '.close-btn', function () {
+
 		if (postScroll) {
 			movePost();
 			setTimeout(closePost, 1000);
 		} else {
-			// movePost();
 			closePost();
 		}
-		return;
-	}
 
-	if (postScroll) {
-		movePost();
-		setTimeout(openPost, 1000);
-	} else {
-		// movePost();
-		openPost();
-	}
+		$('header').removeClass('active');
+
+	});
 }
 
 $(document).on('click', '.post', function () {
@@ -385,6 +415,8 @@ $(document).on('click', '#list [data-index]', function () {
 	if (!post.length) return;
 
 	handlePost(post);
+
+	$('.single-ui').removeClass('open');
 
 });
 
@@ -403,15 +435,22 @@ $(document).on('mouseleave', '#list', function () {
 
 	indexItems.removeClass('hover');
 
-	$('header').removeClass('active');
+	if ($('.single-ui').hasClass('open')) {
+
+	} else {
+		$('header').removeClass('active');
+	}
 
 });
 
-// list
+// single 
 
-// si .post está .open cambiar los mouseenter de los otros .post por click (prev/next)
+// fields
 
-// generar una función general para aplicarle setTimeout en función de si el post se ha movido o no
+$(document).on('click', '.info-btn', function () {
 
-// if postScroll = mover > cerrar > abrir
-// if !postScroll = cerrar > abrir
+	$('.single-ui').toggleClass('open');
+
+	$('header').toggleClass('active');
+
+});

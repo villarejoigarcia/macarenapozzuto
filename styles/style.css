@@ -31,7 +31,8 @@ video {
 	width: auto;
 	height: 100%;
 	object-fit: cover;
-	transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+	/* transition: all 1s cubic-bezier(0.4, 0, 0.2, 1); */
+	transition: all 1s;
 	transform: translate3d(0,0,0);
 }
 
@@ -47,12 +48,14 @@ video {
 	src: url('fonts/authentic-sans-130.otf') format('opentype');
 }
 
-a {
+a,
+span {
 	all: unset;
 	cursor: pointer;
 }
 
-a {
+a,
+span {
 	display: block;
 }
 
@@ -92,9 +95,9 @@ header:before {
 	position: absolute;
 	z-index: -1;
 	inset: 0;
-	backdrop-filter: blur(15px);
-	mask-image: linear-gradient(to bottom, #0b0b0b 33.333%, transparent);
-	height: 0;
+	backdrop-filter: blur(0);
+	mask-image: linear-gradient(to bottom, #0b0b0b, transparent);
+	height: 5vh;
 	/* background-image: linear-gradient(to bottom, #0f0f0f, transparent); */
 	/* background-image: linear-gradient(
 		#0f0f0f,
@@ -105,11 +108,13 @@ header:before {
 	/* background-image: linear-gradient(to bottom, rgba(11,11,11,1), rgba(11,11,11,0) 100%); */
 	background-color: rgba(11,11,11,.333);
 	transition: var(--transition);
-
+	pointer-events: none;
 }
 
 header.active:before {
 	height: 100vh;
+	backdrop-filter: blur(15px);
+	background-color: rgba(11,11,11,.666);
 }
 
 header>* {
@@ -345,6 +350,64 @@ header:hover #last-name {
 #size:hover >*:after,
 .buttons:hover >* *:after {
 	opacity: 0;
+}
+
+/*single*/
+
+.single-ui {
+	position: fixed;
+	z-index: 99;
+
+	top: 0;
+	left: 0;
+	margin-left: 50vw;
+	width: 50%;
+	padding: var(--kv) var(--kv) 0;
+
+	display: flex;
+	/* justify-content: space-between; */
+}
+
+.single-ui>* {
+	height: 0;
+	overflow: hidden;
+	transition: all .666s;
+}
+
+.single-ui.active>*:not(.fields) {
+	height: var(--lh);
+}
+
+.single-ui>* {
+	flex: 1;
+}
+
+.single-ui>*:last-child {
+	text-align: right;
+}
+
+.info-btn span::after {
+	content: " +";
+}
+
+.single-ui.open .info-btn span::after {
+	content: " -";
+}
+
+.fields {
+	flex-grow: 4;
+	opacity: 0;
+	pointer-events: none;
+	transition: all .666s;
+}
+
+.single-ui.open .fields {
+	height: 100%;
+	opacity: 1;
+}
+
+.fields>*:not(:last-child) {
+	margin-bottom: var(--lh);
 }
 
 /*responsive*/
