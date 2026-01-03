@@ -32,7 +32,7 @@ video {
 	height: 100%;
 	object-fit: cover;
 	/* transition: all 1s cubic-bezier(0.4, 0, 0.2, 1); */
-	transition: 1s;
+	transition: all 1s;
 	transform: translate3d(0,0,0);
 }
 
@@ -225,7 +225,7 @@ header:hover #last-name {
 
 	overflow: hidden;
 
-	transition: 1s;
+	transition: .666s;
 }
 
 .post img {
@@ -261,7 +261,7 @@ header:hover #last-name {
 	margin-left: 3px;
 
 	opacity: 0;
-	transition: .666s;
+	transition: 1s;
 }
 
 @media (min-width: 1024px) {
@@ -538,13 +538,8 @@ header:hover #last-name {
 		margin-top: 3px;
 	}
 
-	/* .post.open .media {
-		transition-delay: 1s;
-		opacity: 1;
-		max-height: 50vh;
-	} */
-	 .post.open .media {
-		transition-delay: 1s;
+	.post.open .media {
+		/* transition-delay: 1s; */
 		opacity: 1;
 		max-height: 50vh;
 	}
