@@ -1,3 +1,5 @@
+const isMobile = window.innerWidth <= 768;
+
 // content
 
 $(document).ready(function () {
@@ -9,62 +11,79 @@ $(document).ready(function () {
 	const $carousel = $('#feed');
 
 	$carousel.empty();
+	
+	const isMobile = window.innerWidth <= 768;
 
-	c.projects.forEach((project, index) => {
+	function responsive() {
 
-		const slide = $('<div>')
-		.addClass('post')
-		.attr('data-index', index + 1);
+		c.projects.forEach((project, index) => {
 
-		// media
+			const slide = $('<div>')
+				.addClass('post')
+				.attr('data-index', index + 1);
 
-		if (project.media) {
+			// media
 
-			const cover = $('<div>').addClass('cover');
-			const media = $('<div>').addClass('media');
+			if (project.media) {
 
-			let firstImageAdded = false;
+				const cover = $('<div>').addClass('cover');
+				const media = $('<div>').addClass('media');
 
-			project.media.forEach(m => {
-				if (m.type === "image") {
+				let firstImageAdded = false;
 
-					const img = $('<img>').attr('src', m.src);
+				project.media.forEach(m => {
+					if (m.type === "image") {
 
-					if (!firstImageAdded) {
-						cover.append(img);
-						firstImageAdded = true;
-					} else {
-						media.append(img);
+						const img = $('<img>').attr('src', m.src);
+
+						if (!firstImageAdded) {
+							cover.append(img);
+							firstImageAdded = true;
+						} else {
+							media.append(img);
+						}
+
+						if (isMobile) {
+							img.on('load', function () {
+								const width = $(this).outerWidth();
+								$(this).css('width', width + 'px');
+							});
+						} else {
+							img.on('load', function () {
+								$(this).css('width', '');
+							});
+						}
 					}
-				}
-			});
+				});
 
-			if (media.children().length) {
-				cover.append(media);
+				if (media.children().length) {
+					cover.append(media);
+				}
+
+				slide.append(cover);
+
 			}
 
-			slide.append(cover);
+			if (project.fields) {
 
-		}
+				const fields = $('<div>').addClass('caption');
 
-		if (project.fields) {
+				fields.append(
+					$('<p>').text(index + 1 + '.')
+				);
 
-			const fields = $('<div>').addClass('caption');
+				fields.append($('<p>').addClass('title').text(project.fields.title));
+				fields.append($('<p>').text(project.fields.category));
+				fields.append($('<p>').text(project.fields.year));
 
-			fields.append(
-				$('<p>').text(index + 1 + '.')
-			);
+				slide.append(fields);
+			}
 
-			fields.append($('<p>').addClass('title').text(project.fields.title));
-			fields.append($('<p>').text(project.fields.category));
-			fields.append($('<p>').text(project.fields.year));
+			$carousel.append(slide);
 
-			slide.append(fields);
-		}
+		});
 
-		$carousel.append(slide);
-
-	});
+	}
 
 	const $list = $('#list');
 	$list.empty();
@@ -81,9 +100,23 @@ $(document).ready(function () {
 
 	});
 
+	responsive();
+
+	let lastIsMobile = window.innerWidth <= 768;
+
+	$(window).on('resize', function () {
+
+		const isMobile = window.innerWidth <= 768;
+		if (isMobile !== lastIsMobile) {
+			responsive();
+			lastIsMobile = isMobile;
+		}
+	});
+
 	// functions
 
 	logoAnimation();
+
 });
 
 // logo animation
@@ -198,9 +231,15 @@ document.addEventListener('scroll', function (e) {
 
 	const post = e.target.closest?.('.post');
 
+	const isMobile = window.innerWidth <= 768;
+
 	if (!post) return;
 
-	postScroll = post.scrollLeft !== 0;
+	if (isMobile) {
+		postScroll = post.scrollTop !== 0;
+	} else {
+		postScroll = post.scrollLeft !== 0;
+	}
 
 }, true);
 
@@ -298,9 +337,14 @@ function handlePost(post) {
 	const isOpen = post.hasClass('open');
 	const wasOpen = $('.post').hasClass('open');
 	const postIndex = $('.post').index(post); 
+	const isMobile = window.innerWidth <= 768;
 
 	function movePost() {
-		$('.post').animate({ scrollLeft: 0 }, 1000);
+		if (isMobile) {
+			$('.post').animate({ scrollTop: 0 }, 1000);
+		} else {
+			$('.post').animate({ scrollLeft: 0 }, 1000);
+		}
 	}
 
 	function openPost() {
@@ -318,6 +362,13 @@ function handlePost(post) {
 		$('#list [data-index="' + (postIndex + 1) + '"]').addClass('active');
 
 		$('.single-ui').addClass('active');
+
+		// if (isMobile) {
+		// 	post
+		// 		.find('.media')
+		// 		.addClass('open');
+		// }
+
 		// $('#list [data-index="' + (postIndex + 1) + '"]').addClass('active');
 
 		// function afterLayout() {
@@ -341,7 +392,12 @@ function handlePost(post) {
 
 			const scrollTo = offsetTop - topMargin;
 
-			$('html, body').animate({ scrollTop: scrollTo }, 666 * 2);
+			if (isMobile) {
+				$('html, body').animate({ scrollTop: offsetTop }, 666 * 2);
+			} else {
+				$('html, body').animate({ scrollTop: scrollTo }, 666 * 2);
+			}
+
 		}
 
 		if (wasOpen) {
@@ -451,6 +507,10 @@ $(document).on('click', '.info-btn', function () {
 
 	$('.single-ui').toggleClass('open');
 
-	$('header').toggleClass('active');
+	if (isMobile) {
+		$('#list').toggleClass('active');
+	} else {
+		$('header').toggleClass('active');
+	}
 
 });
