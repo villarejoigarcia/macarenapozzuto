@@ -197,7 +197,7 @@ $(document).on('mouseleave', '.cover', function () {
 			post
 				.removeClass('active');
 
-		}, 666);
+		}, 1000);
 	} else {
 
 		$('.post')
@@ -206,7 +206,7 @@ $(document).on('mouseleave', '.cover', function () {
 	}
 });
 
-$(document).on('mouseenter', '.cover', function () {
+$(document).on('mouseenter touchstart', '.cover', function () {
 
 	const post = $(this).closest('.post');
 
@@ -243,218 +243,112 @@ document.addEventListener('scroll', function (e) {
 
 }, true);
 
-
-// open
-// $(document).on('click', '.post', function () {
-
-// 	// console.log(postScroll);
-
-// 	const post = $(this);
-
-// 	const isOpen = post.hasClass('open');
-
-// 	$('body').addClass('fixed');
-
-// 	function movePost() {
-// 		$('.post').animate({ scrollLeft: 0 }, 1000);
-// 	}
-
-// 	function openPost() {
-// 		post
-// 			.addClass('open')
-// 			.removeClass('hide');
-
-// 		$('.post').not(post)
-// 			.addClass('hide')
-// 			.removeClass('open active');
-
-// 		post.one('transitionend', () => {
-
-// 			post.addClass('active');
-
-// 			const windowHeight = $(window).height();
-// 			const postOffsetTop = post.offset().top;
-// 			const postHeight = post.outerHeight();
-
-// 			const scrollTo =
-// 				postOffsetTop + postHeight / 2 - windowHeight / 2;
-
-// 			$('html, body').animate({ scrollTop: scrollTo }, 1000);
-// 		});
-// 	}
-
-// 	function closePost() {
-
-// 		$('body').removeClass('fixed');
-
-// 		post.removeClass('open active');
-
-// 		$('.post').removeClass('hide');
-
-// 	}
-
-// 	if (isOpen) {
-// 		if (postScroll) {
-
-// 			movePost();
-
-// 			setTimeout(() => {
-// 				closePost();
-// 			}, 1000);
-
-// 		} else {
-
-// 			closePost();
-// 			movePost();
-
-// 		}
-// 		return;
-// 	}
-
-// 	if (postScroll) {
-
-// 		movePost();
-
-// 		setTimeout(() => {
-// 			openPost();
-// 		}, 1000);
-
-// 	} else {
-
-// 		openPost();
-// 		movePost();
-
-// 	}
-
-// });
-
-// const CLOSED_VH = 33.333;
-// const OPEN_VH = 75;
-// const HEIGHT_RATIO = OPEN_VH / CLOSED_VH; // 2.25
-
+// post
 function handlePost(post) {
-
+	
+	const html = $('html');
+	const allPosts = $('.post');
+	const postIndex = $('.post').index(post);
 	const isOpen = post.hasClass('open');
-	const wasOpen = $('.post').hasClass('open');
-	const postIndex = $('.post').index(post); 
+	const currentList = $('#list [data-index="' + (postIndex + 1) + '"]');
+	const allList = $('#list [data-index]');
 	const isMobile = window.innerWidth <= 768;
 
-	function movePost() {
+	function movePost(callback) {
+
 		if (isMobile) {
-			$('.post').animate({ scrollTop: 0 }, 1000);
+			allPosts.animate({ scrollTop: 0 }, 1000, callback);
 		} else {
-			$('.post').animate({ scrollLeft: 0 }, 1000);
+			allPosts.animate({ scrollLeft: 0 }, 1000, callback);
+		}
+
+	}
+
+	function moveFeed() {
+
+		const offsetTop = post.offset().top;
+		const topMargin = window.innerHeight * 0.125;
+		const scrollTo = offsetTop - topMargin;
+
+		if (isMobile) {
+			html.animate({ scrollTop: offsetTop }, 1000);
+		} else {
+			html.animate({ scrollTop: scrollTo }, 1000);
 		}
 	}
 
 	function openPost() {
-		$('body').addClass('fixed');
+
+		html.addClass('fixed');
 
 		post
 			.addClass('open')
-			.removeClass('hide');
+			.removeClass('hide active');
 
-		$('.post').not(post)
+		allPosts.not(post)
 			.addClass('hide')
-			.removeClass('open active');
+			.removeClass('open');
 
-		$('#list [data-index]').removeClass('active');
-		$('#list [data-index="' + (postIndex + 1) + '"]').addClass('active');
+		allList.removeClass('active');
+		currentList.addClass('active');
 
 		$('.single-ui').addClass('active');
 
-		// if (isMobile) {
-		// 	post
-		// 		.find('.media')
-		// 		.addClass('open');
-		// }
-
-		// $('#list [data-index="' + (postIndex + 1) + '"]').addClass('active');
-
-		// function afterLayout() {
-		// 	adjustScrollLeft(post);
-		// 	moveFeed();
-		// }
-		// adjustScrollLeft(post);
-
-		// post.one('transitionend', () => {
-			// moveFeed();
-		// });
-
-		// post.one('transitionend', () => {
-
-		function moveFeed() {
-
-			post.addClass('active');
-
-			const offsetTop = post.offset().top;
-			const topMargin = window.innerHeight * 0.125; // 12.5vh
-
-			const scrollTo = offsetTop - topMargin;
-
-			if (isMobile) {
-				$('html, body').animate({ scrollTop: offsetTop }, 666 * 2);
-			} else {
-				$('html, body').animate({ scrollTop: scrollTo }, 666 * 2);
-			}
-
-		}
-
-		if (wasOpen) {
-			post.one('transitionend', () => {
-				moveFeed();
-			});
-			console.log('a');
-		} else {
-			// post.one('transitionend', () => {
-				moveFeed();
-				console.log('b');
-			// });
-		}
-
-		// });
 	}
 
+	// isOpen
+	if (isOpen) return;
+
+	post.one('transitionend', () => {
+		moveFeed();
+	});
+	
+	// isScroll
+	if (postScroll) {
+
+		movePost(() => {
+			openPost();
+		});
+
+	} else {
+
+		openPost();
+
+	}
+
+	// close
 	function closePost() {
-		$('body').removeClass('fixed');
+
+		html.removeClass('fixed');
 
 		post.removeClass('open active');
 
-		$('.post').removeClass('hide');
+		allPosts.removeClass('hide');
 
-		$('#list [data-index]').removeClass('active');
+		allList.removeClass('active');
 
 		$('.single-ui').removeClass('active open');
 		
 	}
 
-	if (postScroll) {
-		if (isOpen) return;
-		movePost();
-		if (wasOpen) {
-			setTimeout(openPost, 1000);
-		} else {
-			openPost();
-		}
-	} else {
-		if (isOpen) return;
-		openPost();
-	}
-
-	// close
-
-	$(document).on('click', '.close-btn', function () {
+	$(document).one('click', '.close-btn', function () {
 
 		if (postScroll) {
-			movePost();
-			setTimeout(closePost, 1000);
+
+			movePost(() => {
+				closePost();
+				$('header').removeClass('active');
+			});
+
 		} else {
+
 			closePost();
+			$('header').removeClass('active');
+			
 		}
 
-		$('header').removeClass('active');
-
 	});
+	
 }
 
 $(document).on('click', '.post', function () {
