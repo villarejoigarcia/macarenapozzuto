@@ -499,7 +499,7 @@ header:hover #last-name {
 	}
 
 	.caption {
-		position: absolute;
+		position: relative;
 		background: #0b0b0b;
 	}
 
@@ -510,18 +510,18 @@ header:hover #last-name {
 
 	.post {
 		justify-content: start;
-		height: 27.5vh;
+		/* height: 27.5vh; */
 		position: relative;
 	}
 
 	.post.active {
 		overflow: hidden;
-		height: calc(27.5vh + 24px);
+		/* height: calc(27.5vh + 24px); */
 	}
 
-	.post.open {
+	/* .post.open {
 		height: 100dvh;
-	}
+	} */
 
 	.post .cover {
 		/* overflow: hidden; */
@@ -543,11 +543,11 @@ header:hover #last-name {
 
 	.media {
 		flex-direction: column;
-		/* top: 100%; */
+		top: 100%;
 		left: 0;
 		margin-left: 0;
 		width: 100%;
-		position: relative;
+		position: absolute;
 		/* opacity: 0; */
 		gap: 0;
 

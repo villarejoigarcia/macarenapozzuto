@@ -250,44 +250,116 @@ function handlePost(post) {
 	const allPosts = $('.post');
 	const postIndex = $('.post').index(post);
 	const isOpen = post.hasClass('open');
+	const otherPost = post.hasClass('hide');
 	const currentList = $('#list [data-index="' + (postIndex + 1) + '"]');
 	const allList = $('#list [data-index]');
 	const isMobile = window.innerWidth <= 768;
 
 	function movePost(callback) {
 
+		const prevPost = allPosts.filter('.open');
+
 		if (isMobile) {
-			allPosts.animate({ scrollTop: 0 }, 1000, callback);
+			if (otherPost) {
+				prevPost.animate({ scrollTop: 0 }, 1000, callback);
+			} else {
+				post.animate({ scrollTop: 0 }, 1000, callback);
+			}
 		} else {
-			allPosts.animate({ scrollLeft: 0 }, 1000, callback);
+			if (otherPost) {
+				prevPost.animate({ scrollLeft: 0 }, 1000, callback);
+			} else {
+				post.animate({ scrollLeft: 0 }, 1000, callback);
+			}
 		}
 
 	}
 
-	function moveFeed() {
+	function moveFeed(callback) {
 
 		const offsetTop = post.offset().top;
 		const topMargin = window.innerHeight * 0.125;
 		const scrollTo = offsetTop - topMargin;
 
 		if (isMobile) {
-			html.animate({ scrollTop: offsetTop }, 1000);
+			html.animate({ scrollTop: offsetTop }, 1000, callback);
 		} else {
-			html.animate({ scrollTop: scrollTo }, 1000);
+			html.animate({ scrollTop: scrollTo }, 1000, callback);
 		}
 	}
 
 	function openPost() {
 
+		if (isMobile) {
+
+			const img = post.find('.cover > img');
+
+			if (!img.length) return;
+
+			setTimeout(() => {
+
+				const imgHeight = img.outerHeight();
+
+				post.height(imgHeight);
+
+				setTimeout(() => {
+					post.css('height', '100dvh');
+				}, 10);
+
+			}, 1000);
+
+		}
+
 		html.addClass('fixed');
 
-		post
-			.addClass('open')
-			.removeClass('hide active');
+		if (otherPost) {
 
-		allPosts.not(post)
-			.addClass('hide')
-			.removeClass('open');
+			const prevPost = allPosts.filter('.open');
+
+			if (isMobile) {
+
+				const otherImg = prevPost.find('.cover > img').first();
+				if (!otherImg.length) return;
+				const imgHeight = otherImg.outerHeight();
+				prevPost.height(imgHeight);
+
+				setTimeout(() => {
+					prevPost.css('height', '');
+				}, 1000);
+
+				setTimeout(() => {
+					prevPost
+						.addClass('hide')
+						.removeClass('open');
+
+					post
+						.addClass('open')
+						.removeClass('hide active');
+				}, 1000);
+
+			} else {
+
+				prevPost
+					.addClass('hide')
+					.removeClass('open');
+
+				post
+					.addClass('open')
+					.removeClass('hide active');
+
+			}
+
+			console.log('next>slide');
+
+		} else {
+
+			post
+				.addClass('open')
+				.removeClass('hide active');
+
+			console.log('next>open');
+
+		}
 
 		allList.removeClass('active');
 		currentList.addClass('active');
@@ -299,36 +371,147 @@ function handlePost(post) {
 	// isOpen
 	if (isOpen) return;
 
-	post.one('transitionend', () => {
-		moveFeed();
-	});
-	
-	// isScroll
-	if (postScroll) {
+	if (!isMobile) {
+		
+		// isScroll
+		if (postScroll && otherPost) {
 
-		movePost(() => {
+			post.one('transitionend', () => {
+				moveFeed();
+			});
+
+			movePost(() => {
+				openPost();
+			});
+
+			console.log('scroll+open');
+
+		} else if (otherPost) {
+
+			post.one('transitionend', () => {
+				moveFeed();
+			});
+
 			openPost();
-		});
+
+			console.log('slide');
+
+		} else if (postScroll) {
+
+			// post.one('transitionend', () => {
+			// 	moveFeed();
+			// });	
+			
+			movePost(() => {
+				openPost();	
+				moveFeed();		
+			});
+
+			console.log('extra');
+
+		} else {
+
+			moveFeed();
+			openPost();
+
+			console.log('open');
+
+		}
 
 	} else {
 
-		openPost();
+		if (otherPost) {
 
+			if (postScroll) {
+				movePost(() => {
+
+			post.one('transitionend', () => {
+				moveFeed();
+			});
+
+			openPost();
+
+			});
+			} else {
+
+			post.one('transitionend', () => {
+				moveFeed();
+			});
+
+			openPost();
+
+			}
+
+
+		} else {
+
+			moveFeed();
+			openPost();
+
+		}
 	}
+
+	// // isOpen
+	// if (isOpen) return;
+
+	// post.one('transitionend', () => {
+	// 	moveFeed();
+	// });
+	
+	// // isScroll
+	// if (postScroll) {
+
+	// 	movePost(() => {
+	// 		openPost();
+	// 	});
+
+	// 	console.log('scroll+open');
+
+	// } else if (otherPost) {
+
+	// 	console.log('slide');
+
+	// } else {
+
+	// 	openPost();
+
+	// 	console.log('open');
+
+	// }
 
 	// close
 	function closePost() {
 
-		html.removeClass('fixed');
+		if (!isMobile) {
 
-		post.removeClass('open active');
+			post.removeClass('open active');
+
+		} else {
+			const img = post.find('.cover > img');
+
+			if (!img.length) return;
+
+			const imgHeight = img.outerHeight();
+
+			post.height(imgHeight);
+
+			setTimeout(() => {
+
+				post.removeClass('open active');
+				post.css('height', '');
+
+			}, 1000);
+
+		}
+
+		html.removeClass('fixed');
 
 		allPosts.removeClass('hide');
 
 		allList.removeClass('active');
 
 		$('.single-ui').removeClass('active open');
-		
+
 	}
 
 	$(document).one('click', '.close-btn', function () {
