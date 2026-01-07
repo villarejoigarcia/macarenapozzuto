@@ -66,7 +66,7 @@ span,
 a,
 ::before {
 	font-family: "Authentic Sans 130", sans-serif;
-	font-weight: 600;
+	/* font-weight: 600; */
 	font-style: normal;
 	font-size: 13px;
 	line-height: 1.2em;
