@@ -181,48 +181,89 @@ document.addEventListener('DOMContentLoaded', logoAnimation);
 // feed
 
 // hover
-$(document).on('mouseleave', '.cover', function () {
-
-	const post = $(this).closest('.post');
-
-	if ($('.post').hasClass('open')) return;
-
-	if (post.scrollLeft() !== 0) {
-
-		post.find('.media').css('transition-delay', '1.333s');
-
-		setTimeout(() => {
-
-			post.animate({ scrollLeft: 0 }, 1000);
-			post
-				.removeClass('active');
-
-		}, 1000);
-	} else {
-
-		$('.post')
-			.removeClass('hide active');
-
-	}
-});
 
 $(document).on('mouseenter touchstart', '.cover>img', function () {
 
 	const post = $(this).closest('.post');
+	const prevPost = $('.post').filter('.active');
 
 	if ($('.post').hasClass('open')) return;
 
 	post.find('.media').css('transition-delay', '');
 
-	$('.post').not(post)
-		.addClass('hide')
-		.removeClass('active open');
+	// $('.post').not(post)
+	// 	.addClass('hide');
 
-	post
+	// post
+	// 	.removeClass('hide')
+	// 	.addClass('active');
+
+	if (!isMobile) {
+		post.off('wheel.postScroll').on('wheel.postScroll', function (event) {
+			event.preventDefault();
+			this.scrollLeft += (event.originalEvent.deltaY + event.originalEvent.deltaX);
+		});
+	}
+
+	if (postScroll) {
+		
+		setTimeout(() => {
+			$('.post').not(post)
+				.addClass('hide');
+				post
 		.removeClass('hide')
 		.addClass('active');
+		}, 1000);
+
+		console.log('delay');
+	} else {
+
+		$('.post').not(post)
+			.addClass('hide');
+			post
+		.removeClass('hide')
+		.addClass('active');
+
+		console.log('noDelay');
+	}
+
 });
 
+$(document).on('mouseleave', '.cover', function () {
+
+	const post = $(this).closest('.post');
+	const prevPost = post.filter('.active');
+
+	if ($('.post').hasClass('open')) return;
+
+	if (postScroll) {
+
+		// post.animate({ scrollLeft: 0 }, 1000, function () {
+		// 	post.removeClass('active');
+		// 	$('.post').not(post).removeClass('hide');
+		// });
+
+		post.animate({ scrollLeft: 0 }, 1000);
+
+		setTimeout(() => {
+			post.removeClass('active');
+			$('.post').not(post).removeClass('hide');
+		}, 1000);
+	
+		console.log('scroll+out');
+
+	} else {
+
+		post.removeClass('active');
+		$('.post').not(post).removeClass('hide');
+
+		console.log('out');
+
+	}
+
+	post.off('wheel.postScroll');
+
+});
 
 // scroll
 let postScroll = false;
@@ -464,34 +505,6 @@ function handlePost(post) {
 		}
 	}
 
-	// // isOpen
-	// if (isOpen) return;
-
-	// post.one('transitionend', () => {
-	// 	moveFeed();
-	// });
-	
-	// // isScroll
-	// if (postScroll) {
-
-	// 	movePost(() => {
-	// 		openPost();
-	// 	});
-
-	// 	console.log('scroll+open');
-
-	// } else if (otherPost) {
-
-	// 	console.log('slide');
-
-	// } else {
-
-	// 	openPost();
-
-	// 	console.log('open');
-
-	// }
-
 	// close
 	function closePost() {
 
@@ -524,6 +537,19 @@ function handlePost(post) {
 		allList.removeClass('active');
 
 		$('.single-ui').removeClass('active open');
+
+	}
+
+	if (!isMobile) {
+
+		post.off('wheel.postScroll').on('wheel.postScroll', function (event) {
+
+			event.preventDefault();
+			this.scrollLeft += (event.originalEvent.deltaY + event.originalEvent.deltaX);
+
+		});
+
+		allPosts.not(post).off('wheel.postScroll');
 
 	}
 
@@ -566,20 +592,20 @@ $(document).on('click', '#list [data-index]', function () {
 
 });
 
-$(document).on('mouseenter', '#list', function () {
-
+function openList() {
+	
 	if (isMobile && $('.single-ui').hasClass('open')) return;
 
-	const indexItems = $(this).children();
+	const indexItems = $('#list').children();
 
 	indexItems.addClass('hover');
 
 	$('header').addClass('active');
-});
+}
 
-$(document).on('mouseleave', '#list', function () {
+function closeList() {
 
-	const indexItems = $(this).children();
+	const indexItems = $('#list').children();
 
 	indexItems.removeClass('hover');
 
@@ -589,7 +615,45 @@ $(document).on('mouseleave', '#list', function () {
 		$('header').removeClass('active');
 	}
 
+}
+
+$(document).on('mouseenter', '#list', function () {
+
+	openList();
+	
 });
+
+$(document).on('mouseleave', '#list', function () {
+
+	closeList();
+
+});
+
+// $(document).on('mouseenter', '#list', function () {
+
+// 	if (isMobile && $('.single-ui').hasClass('open')) return;
+
+// 	const indexItems = $(this).children();
+
+// 	indexItems.addClass('hover');
+
+// 	$('header').addClass('active');
+	
+// });
+
+// $(document).on('mouseleave', '#list', function () {
+
+// 	const indexItems = $(this).children();
+
+// 	indexItems.removeClass('hover');
+
+// 	if ($('.single-ui').hasClass('open')) {
+
+// 	} else {
+// 		$('header').removeClass('active');
+// 	}
+
+// });
 
 // single 
 

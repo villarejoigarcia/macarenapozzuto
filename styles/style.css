@@ -10,7 +10,7 @@
 body {
 	margin: 0;
 	padding: 0;
-	background-color: rgb(11, 11, 11);
+	background-color: #0f0f0f;
 }
 
 html.fixed {
@@ -96,7 +96,7 @@ header:before {
 	z-index: -1;
 	inset: 0;
 	backdrop-filter: blur(0);
-	mask-image: linear-gradient(to bottom, #0b0b0b 33.333%, transparent);
+	mask-image: linear-gradient(to bottom, #0f0f0f 33.333%, transparent);
 	height: 5vh;
 	background-color: rgba(11,11,11,.15);
 	transition: var(--transition);
@@ -107,7 +107,7 @@ header:before {
 	header.active:before {
 		height: 100vh;
 		backdrop-filter: blur(15px);
-		background-color: rgba(11, 11, 11, .666);
+		background-color: rgba(15, 15, 15, .666);
 	}
 }
 
@@ -252,7 +252,7 @@ header:hover #last-name {
 	position: absolute;
 	top: 0;
 	left: 100%;
-	margin-left: 3px;
+	padding-left: 3px;
 
 	opacity: 0;
 	transition: 1s;
@@ -364,7 +364,7 @@ header:hover #last-name {
 
 .single-ui {
 	position: fixed;
-	z-index: 99;
+	z-index: 999;
 
 	top: 0;
 	left: 50vw;
@@ -505,7 +505,7 @@ header:hover #last-name {
 
 	.caption {
 		position: relative;
-		background: #0b0b0b;
+		background: #0f0f0f;
 	}
 
 	.post.active:not(.open) .caption {
@@ -582,9 +582,9 @@ header:hover #last-name {
 		right: 0;
 		z-index: -1;
 		backdrop-filter: blur(0);
-		mask-image: linear-gradient(to top, #0b0b0b 33.333%, transparent);
+		mask-image: linear-gradient(to top, #0f0f0f 33.333%, transparent);
 		height: 5vh;
-		background-color: rgba(11, 11, 11, .15);
+		background-color: rgba(15, 15, 15, .15);
 		transition: var(--transition);
 		pointer-events: none;
 	}
@@ -593,7 +593,7 @@ header:hover #last-name {
 	#list.active:after {
 		height: 100vh;
 		backdrop-filter: blur(15px);
-		background-color: rgba(11, 11, 11, .666);
+		background-color: rgba(15, 15, 15, .666);
 	}
 
 }
