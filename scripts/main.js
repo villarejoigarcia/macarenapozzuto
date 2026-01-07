@@ -206,7 +206,7 @@ $(document).on('mouseleave', '.cover', function () {
 	}
 });
 
-$(document).on('mouseenter touchstart', '.cover', function () {
+$(document).on('mouseenter touchstart', '.cover>img', function () {
 
 	const post = $(this).closest('.post');
 
@@ -292,21 +292,37 @@ function handlePost(post) {
 
 		if (isMobile) {
 
-			const img = post.find('.cover > img');
+			const img = post.find('.cover>img');
 
 			if (!img.length) return;
 
-			setTimeout(() => {
-
-				const imgHeight = img.outerHeight();
-
-				post.height(imgHeight);
-
+			if (otherPost) {
 				setTimeout(() => {
-					post.css('height', '100dvh');
-				}, 10);
 
-			}, 1000);
+					const imgHeight = img.outerHeight();
+
+					post.height(imgHeight);
+
+					setTimeout(() => {
+						post.css('height', '100dvh');
+					}, 10);
+
+				}, 1000 * 2);
+				// console.log('scroll');
+			} else {
+				setTimeout(() => {
+
+					const imgHeight = img.outerHeight();
+
+					post.height(imgHeight);
+
+					setTimeout(() => {
+						post.css('height', '100dvh');
+					}, 10);
+
+				}, 1000);
+				// console.log('noScroll');
+			}
 
 		}
 
@@ -397,10 +413,6 @@ function handlePost(post) {
 			console.log('slide');
 
 		} else if (postScroll) {
-
-			// post.one('transitionend', () => {
-			// 	moveFeed();
-			// });	
 			
 			movePost(() => {
 				openPost();	
@@ -423,22 +435,23 @@ function handlePost(post) {
 		if (otherPost) {
 
 			if (postScroll) {
+
 				movePost(() => {
 
-			post.one('transitionend', () => {
-				moveFeed();
-			});
+					post.one('transitionend', () => {
+						moveFeed();
+					});
 
-			openPost();
+					openPost();
 
-			});
+				});
 			} else {
 
-			post.one('transitionend', () => {
-				moveFeed();
-			});
+				post.one('transitionend', () => {
+					moveFeed();
+				});
 
-			openPost();
+				openPost();
 
 			}
 
@@ -554,6 +567,8 @@ $(document).on('click', '#list [data-index]', function () {
 });
 
 $(document).on('mouseenter', '#list', function () {
+
+	if (isMobile && $('.single-ui').hasClass('open')) return;
 
 	const indexItems = $(this).children();
 

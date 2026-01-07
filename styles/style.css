@@ -373,6 +373,11 @@ header:hover #last-name {
 
 	display: flex;
 	/* justify-content: space-between; */
+	pointer-events: none;
+}
+
+.single-ui>*:not(.fields) {
+	pointer-events: auto;
 }
 
 .single-ui>* {
