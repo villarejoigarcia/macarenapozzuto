@@ -206,23 +206,26 @@ $(document).on('mouseenter touchstart', '.cover>img', function () {
 	}
 
 	if (postScroll) {
-		
+
 		setTimeout(() => {
 			$('.post').not(post)
 				.addClass('hide');
-				post
-		.removeClass('hide')
-		.addClass('active');
+
+			post
+				.removeClass('hide');
+
 		}, 1000);
 
 		console.log('delay');
+
 	} else {
 
 		$('.post').not(post)
 			.addClass('hide');
-			post
-		.removeClass('hide')
-		.addClass('active');
+
+		post
+			.removeClass('hide')
+			.addClass('active');
 
 		console.log('noDelay');
 	}
@@ -246,8 +249,10 @@ $(document).on('mouseleave', '.cover', function () {
 		post.animate({ scrollLeft: 0 }, 1000);
 
 		setTimeout(() => {
+
 			post.removeClass('active');
 			$('.post').not(post).removeClass('hide');
+
 		}, 1000);
 	
 		console.log('scroll+out');
