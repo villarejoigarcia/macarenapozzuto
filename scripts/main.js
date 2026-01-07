@@ -579,6 +579,8 @@ function handlePost(post) {
 			
 		}
 
+		allPosts.off('wheel.postScroll');
+
 	});
 	
 }
