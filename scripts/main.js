@@ -210,11 +210,13 @@ $(document).on('mouseenter touchstart', '.cover>img', function () {
 		setTimeout(() => {
 			$('.post').not(post)
 				.addClass('hide')
-				.removeClass('active'); //
+				.removeClass('active');
+
+			if ($('.post').hasClass('open')) return;
 
 			post
 				.removeClass('hide')
-				.addClass('active'); //
+				.addClass('active');
 
 		}, 1000);
 
@@ -224,7 +226,7 @@ $(document).on('mouseenter touchstart', '.cover>img', function () {
 
 		$('.post').not(post)
 			.addClass('hide')
-			.removeClass('active'); //
+			.removeClass('active');
 
 		post
 			.removeClass('hide')
@@ -235,7 +237,7 @@ $(document).on('mouseenter touchstart', '.cover>img', function () {
 
 });
 
-$(document).on('mouseleave touchend', '.cover', function () {
+$(document).on('mouseleave', '.cover', function () {
 
 	const post = $(this).closest('.post');
 	const prevPost = post.filter('.active');
@@ -406,7 +408,7 @@ function handlePost(post) {
 
 				prevPost
 					.addClass('hide')
-					.removeClass('open');
+					.removeClass('open active');
 
 				post
 					.addClass('open')
