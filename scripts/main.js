@@ -209,10 +209,12 @@ $(document).on('mouseenter touchstart', '.cover>img', function () {
 
 		setTimeout(() => {
 			$('.post').not(post)
-				.addClass('hide');
+				.addClass('hide')
+				.removeClass('active'); //
 
 			post
-				.removeClass('hide');
+				.removeClass('hide')
+				.addClass('active'); //
 
 		}, 1000);
 
@@ -221,7 +223,8 @@ $(document).on('mouseenter touchstart', '.cover>img', function () {
 	} else {
 
 		$('.post').not(post)
-			.addClass('hide');
+			.addClass('hide')
+			.removeClass('active'); //
 
 		post
 			.removeClass('hide')
@@ -232,7 +235,7 @@ $(document).on('mouseenter touchstart', '.cover>img', function () {
 
 });
 
-$(document).on('mouseleave', '.cover', function () {
+$(document).on('mouseleave touchend', '.cover', function () {
 
 	const post = $(this).closest('.post');
 	const prevPost = post.filter('.active');
