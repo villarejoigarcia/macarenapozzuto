@@ -246,6 +246,10 @@ header:hover #last-name {
 	position: relative;
 }
 
+.post.active {
+	cursor: pointer;
+}
+
 .media {
 	display: flex;
 	gap: 3px;
@@ -508,6 +512,7 @@ header:hover #last-name {
 
 #archive>* {
 	flex: 0 1 25%;
+	cursor: zoom-in;
 }
 
 #archive img {
@@ -522,6 +527,7 @@ header:hover #last-name {
 
 #archive>*.active {
 	flex: 50%;
+	cursor: zoom-out;
 }
 
 /*responsive*/

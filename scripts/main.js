@@ -634,7 +634,7 @@ function handlePost(post) {
 	
 }
 
-$(document).on('click', '.post', function () {
+$(document).on('click', '.post.active', function () {
 
 	handlePost($(this));
 
@@ -770,7 +770,7 @@ $(document).on('click', '#archive-btn', function () {
 		archive.addClass('active');
 
 		//
-		
+
 		$('html').removeClass('fixed').scrollTop(0);
 
 		$('.post').removeClass('open hide active').scrollLeft(0);
