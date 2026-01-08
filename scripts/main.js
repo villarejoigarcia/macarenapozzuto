@@ -498,6 +498,9 @@ function handlePost(post) {
 				openPost();
 			});
 
+			// movePost();
+			// openPost();
+
 			console.log('scroll+open');
 
 		} else if (otherPost) {
@@ -634,7 +637,7 @@ function handlePost(post) {
 	
 }
 
-$(document).on('click', '.post.active', function () {
+$(document).on('click', '.post', function () {
 
 	handlePost($(this));
 
