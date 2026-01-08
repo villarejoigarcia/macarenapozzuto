@@ -358,6 +358,7 @@ $(document).on('mouseleave', '.cover', function () {
 	}
 
 	// post.off('wheel.postScroll');
+	post.off('.dragScroll');
 
 });
 
@@ -519,6 +520,42 @@ function handlePost(post) {
 		currentList.addClass('active');
 
 		$('.single-ui').addClass('active');
+
+		if (!isMobile) {
+			let isDragging = false;
+			let dragMoved = false;
+			let startX;
+			let scrollStart;
+
+			post.off('.dragScroll');
+			post.find('img').attr('draggable', false);
+
+			post.on('mousedown.dragScroll', function (e) {
+				isDragging = true;
+				dragMoved = false;
+				startX = e.pageX;
+				scrollStart = this.scrollLeft;
+			});
+
+			$(document).on('mousemove.dragScroll', (e) => {
+				if (!isDragging) return;
+				const dx = e.pageX - startX;
+				if (Math.abs(dx) > 5) dragMoved = true;
+				post[0].scrollLeft = scrollStart - dx;
+			});
+
+			$(document).on('mouseup.dragScroll', () => {
+				isDragging = false;
+			});
+
+			post.on('click.dragScroll', function (e) {
+				if (dragMoved) {
+					e.preventDefault();
+					e.stopImmediatePropagation();
+					dragMoved = false;
+				}
+			});
+		}
 
 	}
 
@@ -851,7 +888,8 @@ $(document).on('click', '#archive-btn', function () {
 		posts
 			.removeClass('open hide active')
 			.scrollLeft(0)
-			.off('wheel.postScroll');
+			.off('wheel.postScroll')
+			.off('.dragScroll');
 
 		postButtons.removeClass('active');
 
