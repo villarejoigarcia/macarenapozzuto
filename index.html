@@ -13,106 +13,67 @@
   <link rel="icon" type="image/x-icon" href="macarenapozzuto_avatar.jpg">
   <link href="styles/style.css" rel="stylesheet" type="text/css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<link rel="stylesheet" href="https://use.typekit.net/wgh8has.css">
+  <link rel="stylesheet" href="https://use.typekit.net/wgh8has.css">
 </head>
 
 <body>
 
-  <main id="content">
-  
-    <header>
-    
-      <div id="logo-wrap">
-        <a id="logo">
-          <h1>M</h1>
-          <div>
-            <h1>acarena</h1>
-          </div>
-          <h1 id="last-name">P</h1>
-          <div>
-            <h1>ozz</h1>
-          </div>
-          <div id="zz">
-            <h1>zz</h1>
-          </div>
-          <div>
-            <h1>uto</h1>
-          </div>
-        </a>
-      </div>
-    
-      <div>
-        <div id="nav">
-          <a id="work">Projects</a>
-          <a id="about">About</a>
-          <a id="archive">Archive</a>
-        </div>
-      </div>
-    
-      <!-- <section id="info-container">
-    
-        <div id="info-fields">
-          <div>
-            <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sit amet convallis dui. Nullam dui orci,
-              sagittis sit amet magna ultricies, vulputate consequat mi. Morbi interdum, augue quis rutrum tempor, lacus
-              tellus iaculis odio, sit amet rhoncus sem lectus dapibus leo. Aenean metus nibh, feugiat in arcu quis,
-              placerat dapibus odio. Ut commodo leo porta eros auctor, aliquet dui convallis. Sed fringilla felis vel erat
-              molestie auctor. Ut id varius magna, vitae rhoncus quam. Etiam vel tincidunt tellus. Proin sit amet convallis
-              dui. Lorem ipsum dolor sit amet.</h1>
-          </div>
-          <div id="services">
-            <div>
-              <h2>Services</h2>
-              <p>Branding</p>
-              <p>Editorial Design</p>
-              <p>Web Design</p>
-              <p>Art Direction</p>
-              <p>Illustration</p>
-            </div>
-          </div>
-        </div>
-    
-        <div id="contact">
-          <div>
-            <div>
-              <p><a>hello@macarenapozzuto.com</a></p>
-            </div>
-            <div>
-              <p><a>+34 674 257 623</a></p>
-            </div>
-            <div>
-              <p><a>@macarenapozzuto</a></p>
-            </div>
-          </div>
-          <div>
-            <div>
-              <p><a>Barcelona, Spain</a></p>
-            </div>
-            <div>
-              <p><a>© 2025. All rights reserved</a></p>
-            </div>
-          </div>
-        </div>
-    
-      </section> -->
-    
-    </header>
+  <header>
 
-    <section id="front-page">
+    <div id="logo-wrap">
+      <a id="logo">
+        <h1>M</h1>
+        <div>
+          <h1>acarena</h1>
+        </div>
+        <h1 id="last-name">P</h1>
+        <div>
+          <h1>ozz</h1>
+        </div>
+        <div id="zz">
+          <h1>zz</h1>
+        </div>
+        <div>
+          <h1>uto</h1>
+        </div>
+      </a>
+    </div>
+
+    <div>
+      <div id="nav">
+        <a id="projects-btn" class="active">Projects</a>
+        <a id="about-btn">About</a>
+        <a id="archive-btn">Archive</a>
+      </div>
+    </div>
+
+  </header>
+
+  <div id="overlay"></div>
+
+  <main id="content">
+
+    <!-- archive -->
+
+    <section id="archive"></section>
+
+    <!-- front page -->
+
+    <section id="front-page" class="active">
 
       <div id="feed">
-        
+
         <!-- Content -->
 
-      </div>
-
-      <div id="list">
-      
-        <!-- Content -->
-      
       </div>
 
       <div class="single-ui">
+      
+        <div id="list">
+      
+          <!-- Content -->
+      
+        </div>
 
         <div class="info-btn">
           <span>Info</span>
@@ -120,9 +81,13 @@
 
         <div class="fields">
           <p>Campaign, 2024</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sit amet convallis dui. Nullam dui orci, sagittis sit amet magna ultricies, vulputate consequat mi. Morbi interdum, augue quis rutrum tempor, lacus tellus iaculis odio, sit amet rhoncus sem lectus dapibus leo. Aenean metus nibh, feugiat in arcu quis amet, placerat dapibus odio.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sit amet convallis dui. Nullam dui orci,
+            sagittis sit amet magna ultricies, vulputate consequat mi. Morbi interdum, augue quis rutrum tempor, lacus
+            tellus iaculis odio, sit amet rhoncus sem lectus dapibus leo. Aenean metus nibh, feugiat in arcu quis amet,
+            placerat dapibus odio.</p>
           <p>Done at Phantasia Services
-            <br>Creative Direction: Malva Sawada</p>
+            <br>Creative Direction: Malva Sawada
+          </p>
         </div>
 
         <div class="close-btn">
@@ -133,8 +98,49 @@
 
     </section>
 
-    <!-- <div id="blur-footer"></div> -->
+    <!-- about -->
+
+    <section id="about">
     
+      <div id="bio">
+        <h1>Independent graphic designer and art director from Argentina, based in Barcelona and working
+          globally.<br><br>Specialized in crafting brand identities and shaping cutting-edge visual worlds.<br><br>My creative
+          practice is dynamic, grounded on conceptual thinking, collaboration and iteration. I approach each project
+          through
+          open questions and explorations, allowing the process to define the outcome.</h1>
+      </div>
+    
+      <div id="services">
+        <h2>Services</h2>
+        <p>Branding</p>
+        <p>Editorial Design</p>
+        <p>Web Design</p>
+        <p>Art Direction</p>
+        <p>Illustration</p>
+      </div>
+
+      <div id="experience">
+        <h2>Experience</h2>
+        <p>Previously worked with <a>SoundCloud</a>, <a>Phantasia Services</a>, <a>P.A.R</a>, <a>Angello Torres Studio</a>, <a>Sofia Noceti</a> and <a>Monks</a>. Full resume available upon request.</p>
+      </div>
+    
+      <div id="contact">
+        <h2>Contact</h2>
+          <a>macarenapozzuto@gmail.com</a>
+          <a>@macarenapozzuto</a>
+      </div>
+    
+      <div id="imprint">
+        <div>
+          <p>© 2025. All rights reserved</p>
+        </div>
+        <div>
+          <p>Barcelona, Spain</p>
+        </div>
+      </div>
+    
+    </section>
+
   </main>
 
   <script src="scripts/content.js"></script>

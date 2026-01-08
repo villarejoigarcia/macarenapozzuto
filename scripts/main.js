@@ -10,11 +10,15 @@ $(document).ready(function () {
 
 	const $carousel = $('#feed');
 
+	const archive = $('#archive');
+
 	$carousel.empty();
 	
 	const isMobile = window.innerWidth <= 768;
 
 	function responsive() {
+
+		// feed
 
 		c.projects.forEach((project, index) => {
 
@@ -82,6 +86,62 @@ $(document).ready(function () {
 			$carousel.append(slide);
 
 		});
+
+		// archive
+
+		function shuffle(array) {
+			const arr = array.slice(); // copia, no muta el original
+			for (let i = arr.length - 1; i > 0; i--) {
+				const j = Math.floor(Math.random() * (i + 1));
+				[arr[i], arr[j]] = [arr[j], arr[i]];
+			}
+			return arr;
+		}
+
+		const allMedia = [];
+
+		c.projects.forEach(project => {
+			project.media?.forEach(m => allMedia.push(m));
+		});
+
+		// shuffle(allMedia).forEach(m => {
+
+		// 	const media = $('<div>');
+
+		// 	if (m.type === 'image') {
+		// 		media.append($('<img>').attr('src', m.src));
+		// 	}
+
+		// 	archive.append(media);
+		// });
+
+		// shuffle
+
+		function shuffleArchive() {
+
+			archive.empty(); // limpia el DOM
+
+			shuffle(allMedia).forEach(m => {
+
+				const media = $('<div>');
+
+				if (m.type === 'image') {
+					media.append($('<img>').attr('src', m.src));
+				}
+
+				archive.append(media);
+			});
+		}
+
+		$(document).on('click', '#archive-btn', function () {
+
+			if (!$('#archive').hasClass('active')) return;
+
+			shuffleArchive();
+
+		});
+
+		// shuffle();
 
 	}
 
@@ -176,7 +236,7 @@ function logoAnimation() {
 
 // logo
 
-document.addEventListener('DOMContentLoaded', logoAnimation);
+// document.addEventListener('DOMContentLoaded', logoAnimation);
 
 // feed
 
@@ -569,13 +629,15 @@ function handlePost(post) {
 
 			movePost(() => {
 				closePost();
-				$('header').removeClass('active');
+				// $('header').removeClass('active');
+				$('#overlay').removeClass('single');
 			});
 
 		} else {
 
 			closePost();
-			$('header').removeClass('active');
+			// $('header').removeClass('active');
+			$('#overlay').removeClass('single');
 			
 		}
 
@@ -612,7 +674,8 @@ function openList() {
 
 	indexItems.addClass('hover');
 
-	$('header').addClass('active');
+	// $('header').addClass('active');
+	$('#overlay').addClass('single');
 }
 
 function closeList() {
@@ -624,7 +687,8 @@ function closeList() {
 	if ($('.single-ui').hasClass('open')) {
 
 	} else {
-		$('header').removeClass('active');
+		// $('header').removeClass('active');
+		$('#overlay').removeClass('single');
 	}
 
 }
@@ -641,32 +705,6 @@ $(document).on('mouseleave', '#list', function () {
 
 });
 
-// $(document).on('mouseenter', '#list', function () {
-
-// 	if (isMobile && $('.single-ui').hasClass('open')) return;
-
-// 	const indexItems = $(this).children();
-
-// 	indexItems.addClass('hover');
-
-// 	$('header').addClass('active');
-	
-// });
-
-// $(document).on('mouseleave', '#list', function () {
-
-// 	const indexItems = $(this).children();
-
-// 	indexItems.removeClass('hover');
-
-// 	if ($('.single-ui').hasClass('open')) {
-
-// 	} else {
-// 		$('header').removeClass('active');
-// 	}
-
-// });
-
 // single 
 
 // fields
@@ -675,10 +713,69 @@ $(document).on('click', '.info-btn', function () {
 
 	$('.single-ui').toggleClass('open');
 
-	if (isMobile) {
-		$('#list').toggleClass('active');
-	} else {
-		$('header').toggleClass('active');
-	}
+	// if (isMobile) {
+		// $('#list').toggleClass('active');
+	// } else {
+		// $('header').toggleClass('active');
+		$('#overlay').toggleClass('single');
+	// }
 
 });
+
+// about
+
+const menuButtons = $('#nav>*');
+
+$(document).on('click', '#projects-btn', function () {
+
+	$('#front-page').addClass('active');
+
+	$('main>*').not('#front-page').removeClass('active');
+
+	$('html').removeClass('fixed').scrollTop(0);
+
+});
+
+$(document).on('click', '#about-btn', function () {
+
+	$('#about').addClass('active');
+
+	$('#overlay').addClass('about');
+
+	$('.single-ui').addClass('about');
+
+});
+
+$(document).on('click', '#archive-btn', function () {
+
+	$('#archive').addClass('active');
+
+	$('#archive').scrollTop(0);
+
+	$('main>*').not('#archive').removeClass('active');
+
+	$('.single-ui').addClass('about');
+
+	$('html').addClass('fixed');
+
+});
+
+$(document).on('click', '#nav>*:not(#about-btn)', function () {
+
+	$('#about').removeClass('active');
+
+	$('#overlay').removeClass('about');
+
+	$('.single-ui').removeClass('about');
+
+});
+
+menuButtons.on('click', function () {
+
+	$(this).addClass('active');
+
+	menuButtons.not(this).removeClass('active');
+
+
+});
+
