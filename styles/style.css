@@ -155,7 +155,7 @@ header>*>* {
 	text-transform: uppercase;
 }
 
-#logo-wrap:hover #last-name {
+header:hover #last-name {
 	padding-left: .3em;
 }
 

@@ -220,13 +220,13 @@ function logoAnimation() {
 		zz.style.maxWidth = width + 'px';
 	}
 
-	logoWrap?.addEventListener('mouseenter', () => {
+	header?.addEventListener('mouseenter', () => {
 		logoDivs.forEach(div => {
 			div.style.maxWidth = div.dataset.realWidth + 'px';
 		});
 		if (zz) zz.style.maxWidth = '0';
 	});
-	logoWrap?.addEventListener('mouseleave', () => {
+	header?.addEventListener('mouseleave', () => {
 		logoDivs.forEach(div => {
 			div.style.maxWidth = '0';
 		});
@@ -733,6 +733,8 @@ $(document).on('click', '#projects-btn', function () {
 	$('main>*').not('#front-page').removeClass('active');
 
 	$('html').removeClass('fixed').scrollTop(0);
+
+	$('.post').removeClass('open hide active').scrollLeft(0);
 
 });
 
