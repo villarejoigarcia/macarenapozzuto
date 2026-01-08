@@ -101,6 +101,10 @@ header {
 	pointer-events: none;
 }
 
+#overlay.about {
+	pointer-events: auto;
+}
+
 #overlay::before {
 	content: "";
 	position: absolute;
@@ -415,6 +419,7 @@ header:hover #last-name {
 
 #list>*.active {
 	height: var(--lh);
+	/* order: -1; */
 }
 
 #list>*.hover {
@@ -513,6 +518,10 @@ header:hover #last-name {
 #archive.active {
 	opacity: 1;
 	pointer-events: auto;
+}
+
+#archive>*.active {
+	flex: 50%;
 }
 
 /*responsive*/
@@ -619,6 +628,11 @@ header:hover #last-name {
 		/* height: calc(27.5vh + 24px); */
 	}
 
+	.post.active .cover>img {
+		width: 100% !important;
+		max-height: 200vh;
+	}
+
 	/* .post.open {
 		height: 100dvh;
 	} */
@@ -688,6 +702,10 @@ header:hover #last-name {
 
 	#archive>* {
 		flex: 0 1 50%;
+	}
+
+	#archive>*.active {
+		flex: 100%;
 	}
 
 }

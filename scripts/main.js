@@ -88,9 +88,8 @@ $(document).ready(function () {
 		});
 
 		// archive
-
 		function shuffle(array) {
-			const arr = array.slice(); // copia, no muta el original
+			const arr = array.slice();
 			for (let i = arr.length - 1; i > 0; i--) {
 				const j = Math.floor(Math.random() * (i + 1));
 				[arr[i], arr[j]] = [arr[j], arr[i]];
@@ -104,22 +103,10 @@ $(document).ready(function () {
 			project.media?.forEach(m => allMedia.push(m));
 		});
 
-		// shuffle(allMedia).forEach(m => {
-
-		// 	const media = $('<div>');
-
-		// 	if (m.type === 'image') {
-		// 		media.append($('<img>').attr('src', m.src));
-		// 	}
-
-		// 	archive.append(media);
-		// });
-
 		// shuffle
-
 		function shuffleArchive() {
 
-			archive.empty(); // limpia el DOM
+			archive.empty();
 
 			shuffle(allMedia).forEach(m => {
 
@@ -135,7 +122,7 @@ $(document).ready(function () {
 
 		$(document).on('click', '#archive-btn', function () {
 
-			if (!$('#archive').hasClass('active')) return;
+			if ($('#about, #archive').hasClass('active')) return;
 
 			shuffleArchive();
 
@@ -705,32 +692,39 @@ $(document).on('mouseleave', '#list', function () {
 
 });
 
-// single 
+// buttons
 
-// fields
+const menuButtons = $('#nav>*');
+const archive = $('#archive');
+const projects = $('#front-page');
+const about = $('#about');
+const postButtons = $('.single-ui');
+const overlay = $('#overlay');
 
-$(document).on('click', '.info-btn', function () {
+menuButtons.on('click', function () {
 
-	$('.single-ui').toggleClass('open');
-
-	// if (isMobile) {
-		// $('#list').toggleClass('active');
-	// } else {
-		// $('header').toggleClass('active');
-		$('#overlay').toggleClass('single');
-	// }
+	$(this).addClass('active');
+	menuButtons.not(this).removeClass('active');
 
 });
 
-// about
+// post
+$(document).on('click', '.info-btn', function () {
 
-const menuButtons = $('#nav>*');
+	postButtons.toggleClass('open');
+	$('#overlay').toggleClass('single');
 
+});
+
+// projects
 $(document).on('click', '#projects-btn', function () {
 
-	$('#front-page').addClass('active');
+	archive.one('transitionend', () => {
+		if (archive.hasClass('active')) return;
+		projects.addClass('active');
+	});
 
-	$('main>*').not('#front-page').removeClass('active');
+	$('main>*').not(projects).removeClass('active');
 
 	$('html').removeClass('fixed').scrollTop(0);
 
@@ -738,46 +732,59 @@ $(document).on('click', '#projects-btn', function () {
 
 });
 
+// about
 $(document).on('click', '#about-btn', function () {
 
-	$('#about').addClass('active');
+	about.addClass('active');
 
 	$('#overlay').addClass('about');
 
-	$('.single-ui').addClass('about');
-
-});
-
-$(document).on('click', '#archive-btn', function () {
-
-	$('#archive').addClass('active');
-
-	$('#archive').scrollTop(0);
-
-	$('main>*').not('#archive').removeClass('active');
-
-	$('.single-ui').addClass('about');
-
-	$('html').addClass('fixed');
+	postButtons.addClass('about');
 
 });
 
 $(document).on('click', '#nav>*:not(#about-btn)', function () {
 
-	$('#about').removeClass('active');
+	about.removeClass('active');
 
 	$('#overlay').removeClass('about');
 
-	$('.single-ui').removeClass('about');
+	postButtons.removeClass('about');
 
 });
 
-menuButtons.on('click', function () {
+// archive
+$(document).on('click', '#archive-btn', function () {
 
-	$(this).addClass('active');
+	projects.one('transitionend', () => {
+		if (projects.hasClass('active')) return;
+		archive.addClass('active');
+	});
 
-	menuButtons.not(this).removeClass('active');
+	$('main>*').not(archive).removeClass('active');
 
+	postButtons.addClass('about');
+
+	$('html').addClass('fixed');
+
+	if ($(this).hasClass('active')) return;
+
+	archive.scrollTop(0);
 
 });
 
+$(document).on('click', '#archive>*', function () {
+
+	$(this).toggleClass('active');
+
+});
+
+// overlay
+
+// overlay.on('click', function () {
+
+// 	$(this).removeClass('about');
+// 	about.removeClass('active');
+// 	$('#about-btn').removeClass('active');
+
+// });
