@@ -149,6 +149,11 @@ const content = {
       excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque neque odio, accumsan at mauris laoreet, feugiat convallis lacus. Aliquam mattis, diam id sodales finibus, felis lacus accumsan eros, nec venenatis mi orci sit amet eros. Aliquam a tellus augue. Integer et tellus odio.",
       media: [
         { type: "image", src: "images/macarenapozzuto_allthings_1.webp" },
+        { type: "image", src: "images/macarenapozzuto_allthings_2.webp" },
+        { type: "image", src: "images/macarenapozzuto_allthings_3.webp" },
+        { type: "image", src: "images/macarenapozzuto_allthings_4.webp" },
+        { type: "image", src: "images/macarenapozzuto_allthings_5.webp" },
+        { type: "image", src: "images/macarenapozzuto_allthings_6.webp" },
       ]
     },
     {
