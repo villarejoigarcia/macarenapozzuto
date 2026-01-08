@@ -232,6 +232,10 @@ header:hover #last-name {
 	overflow: scroll;
 }
 
+.post.open {
+	cursor: pointer;
+}
+
 @media (min-width: 1024px) {
 	.post.active img {
 		max-height: 33.333vh;
@@ -246,7 +250,8 @@ header:hover #last-name {
 	position: relative;
 }
 
-.post.active {
+.post.active,
+.cover>img {
 	cursor: pointer;
 }
 
@@ -273,8 +278,12 @@ header:hover #last-name {
 
 }
 
-.post.hide {
+.post.hide img {
 	opacity: .2;
+}
+
+.post.hide .cover>img:hover {
+	opacity: 1;
 }
 
 .caption {
@@ -440,14 +449,14 @@ header:hover #last-name {
 #about {
 	position: fixed;
 	z-index: 99;
-	/* width: 100%; */
-	width: calc(100%/3);
+	width: 100%;
+	/* width: calc(100%/3); */
 	height: 100%;
 	top: 0;
-	/* left: 0; */
-	left: calc(100%/3);
-	/* padding: var(--kv) calc(100%/3); */
-	padding: var(--kv);
+	left: 0;
+	/* left: calc(100%/3); */
+	padding: var(--kv) calc(100%/3);
+	/* padding: var(--kv); */
 
 	display: flex;
 	flex-direction: column;
@@ -526,7 +535,7 @@ header:hover #last-name {
 }
 
 #archive>*.active {
-	flex: 50%;
+	flex: calc(100%/3);
 	cursor: zoom-out;
 }
 
