@@ -822,6 +822,7 @@ $(document).on('click', '#projects-btn', function () {
 	archive.one('transitionend', () => {
 		if (archive.hasClass('active')) return;
 		projects.addClass('active');
+
 	});
 
 	$('main>*').not(projects).removeClass('active');
@@ -836,6 +837,14 @@ $(document).on('click', '#projects-btn', function () {
 	// 	$('.post').css('height', '');
 	// }
 
+	if (postButtons.hasClass('open')) {
+		overlay
+			.removeClass('about')
+			.addClass('single');
+	}
+
+	postButtons.removeClass('about');
+
 });
 
 // about
@@ -843,7 +852,9 @@ $(document).on('click', '#about-btn', function () {
 
 	about.addClass('active');
 
-	overlay.addClass('about');
+	overlay
+	.addClass('about')
+	.removeClass('single');
 
 	postButtons.addClass('about');
 
@@ -853,7 +864,7 @@ $(document).on('click', '#nav>*:not(#about-btn)', function () {
 
 	about.removeClass('active');
 	overlay.removeClass('about');
-	postButtons.removeClass('about');
+	// postButtons.removeClass('about');
 
 });
 
@@ -891,8 +902,6 @@ $(document).on('click', '#archive-btn', function () {
 			.off('wheel.postScroll')
 			.off('.dragScroll');
 
-		postButtons.removeClass('active');
-
 		$('#list>*').removeClass('active');
 
 		if (isMobile) {
@@ -905,11 +914,20 @@ $(document).on('click', '#archive-btn', function () {
 			.addClass('active')
 			.scrollTop(0);
 
+		postButtons.removeClass('active open');
+
 	});
 
 	$('main>*').not(archive).removeClass('active');
 
-	postButtons.addClass('about');
+	// postButtons.addClass('about');
+	overlay.removeClass('single');
+
+	// postButtons
+	// 	.addClass('about')
+	// 	.removeClass('open');
+
+	// overlay.removeClass('single');
 
 	$('html').addClass('fixed');
 

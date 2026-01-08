@@ -337,7 +337,7 @@ header:hover #last-name {
 
 .single-ui {
 	position: fixed;
-	z-index: 9;
+	z-index: 999;
 
 	top: 0;
 	left: 33.333vw;
@@ -368,7 +368,7 @@ header:hover #last-name {
 .single-ui>*:not(.fields, #list) {
 	height: 0;
 	overflow: hidden;
-	transition: all .666s;
+	transition: 1s;
 }
 
 .single-ui.active>*:not(.fields, #list) {
