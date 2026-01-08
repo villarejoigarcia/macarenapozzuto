@@ -463,7 +463,7 @@ header:hover #last-name {
 }
 
 #about>*:not(:last-child) {
-	margin-bottom: calc(var(--lh) * 5);
+	margin-bottom: calc(var(--lh) * 3);
 }
 
 #about.active {
@@ -588,7 +588,7 @@ header:hover #last-name {
 	.single-ui .fields {
 		position: fixed;
 		left: 0;
-		bottom: calc(32px + var(--lh));
+		bottom: calc(24px + var(--lh));
 		padding: 0 var(--kv);
 	}
 
@@ -697,7 +697,7 @@ header:hover #last-name {
 	#about {
 		width: 100%;
 		left: 0;
-		padding: calc(var(--kv) + var(--lh)*3) var(--kv) var(--kv);
+		padding: calc(var(--kv) + var(--lh)*2) var(--kv) var(--kv);
 	}
 
 	#archive>* {

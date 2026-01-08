@@ -700,6 +700,7 @@ const projects = $('#front-page');
 const about = $('#about');
 const postButtons = $('.single-ui');
 const overlay = $('#overlay');
+const posts = $('.post');
 
 menuButtons.on('click', function () {
 
@@ -726,9 +727,15 @@ $(document).on('click', '#projects-btn', function () {
 
 	$('main>*').not(projects).removeClass('active');
 
-	$('html').removeClass('fixed').scrollTop(0);
+	// if (about.hasClass('active')) return;
 
-	$('.post').removeClass('open hide active').scrollLeft(0);
+	// $('html').removeClass('fixed').scrollTop(0);
+
+	// $('.post').removeClass('open hide active').scrollLeft(0);
+
+	// if (isMobile) {
+	// 	$('.post').css('height', '');
+	// }
 
 });
 
@@ -757,8 +764,27 @@ $(document).on('click', '#nav>*:not(#about-btn)', function () {
 $(document).on('click', '#archive-btn', function () {
 
 	projects.one('transitionend', () => {
+
 		if (projects.hasClass('active')) return;
+
 		archive.addClass('active');
+
+		//
+		
+		$('html').removeClass('fixed').scrollTop(0);
+
+		$('.post').removeClass('open hide active').scrollLeft(0);
+
+		$('.post').off('wheel.postScroll');
+
+		postButtons.removeClass('active');
+
+		$('#list>*').removeClass('active');
+
+		if (isMobile) {
+			$('.post').css('height', '');
+		}
+
 	});
 
 	$('main>*').not(archive).removeClass('active');
