@@ -342,13 +342,13 @@ header:hover #last-name {
 	top: 0;
 	left: 33.333vw;
 	width: 66.666%;
-	padding: var(--kv) var(--kv) 0;
+	padding: var(--kv) var(--kv) 0 0;
 
 	display: flex;
 	align-items: start;
 	justify-content: start;
 	/* justify-content: space-between; */
-	transition: 1s;
+	transition: .666s;
 }
 
 .single-ui.about {
@@ -463,7 +463,7 @@ header:hover #last-name {
 
 	opacity: 0;
 	pointer-events: none;
-	transition: 1s;
+	transition: .666s;
 
 	overflow: scroll;
 
