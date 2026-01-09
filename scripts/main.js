@@ -902,7 +902,9 @@ $(document).on('click', '#archive-btn', function () {
 			.off('wheel.postScroll')
 			.off('.dragScroll');
 
-		$('#list>*').removeClass('active');
+			postButtons.removeClass('active open');
+
+			$('#list>*').removeClass('active');
 
 		if (isMobile) {
 			posts.css('height', '');
@@ -914,20 +916,17 @@ $(document).on('click', '#archive-btn', function () {
 			.addClass('active')
 			.scrollTop(0);
 
-		postButtons.removeClass('active open');
-
 	});
+
+	// postButtons.removeClass('active open');
+
+	// $('#list>*').removeClass('active');
+
+	 postButtons.addClass('about');
 
 	$('main>*').not(archive).removeClass('active');
 
-	// postButtons.addClass('about');
 	overlay.removeClass('single');
-
-	// postButtons
-	// 	.addClass('about')
-	// 	.removeClass('open');
-
-	// overlay.removeClass('single');
 
 	$('html').addClass('fixed');
 
